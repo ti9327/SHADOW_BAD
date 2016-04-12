@@ -67,7 +67,7 @@ byte turnspeed = 75; //50;     // the higher this number the faster it will spin
 byte domespeed = 127;    // If using a speed controller for the dome, sets the top speed
                          // Use a number up to 127 for serial
 
-byte ramping = 6; //3;   // Ramping- the lower this number the longer R2 will take to speedup or slow down,
+byte ramping = 1; //3;   // Ramping- the lower this number the longer R2 will take to speedup or slow down,
                          // change this by increments of 1
 
 int footDriveSpeed = 0;
@@ -189,7 +189,7 @@ boolean isDomeMotorStopped = true;
 boolean isPS3NavigatonInitialized = false;
 boolean isSecondaryPS3NavigatonInitialized = false;
 
-byte vol = 0; // 0 = full volume, 255 off
+byte vol = 40; // 0 = full volume, 255 off
 boolean isStickEnabled = true;
 byte isAutomateDomeOn = false;
 unsigned long automateMillis = 0;
@@ -274,6 +274,12 @@ void setup()
       digitalWrite(COIN_SLOT_LED_PINS[i], LOW); // all LEDs off
       nextCoinSlotLedFlash[i] = millis() +random(100, 1000);
     }     
+
+    trigger.play(56);
+//    #ifdef SHADOW_DEBUG
+//      output += "\r\nCurrent Volume setting: ";
+//      output += vol;
+//    #endif
 }
 
 boolean readUSB()
@@ -302,7 +308,7 @@ void loop()
     #ifdef TEST_CONROLLER
       testPS3Controller();
     #endif
-
+   
     //LOOP through functions from highest to lowest priority.
 
     if ( !readUSB() )
@@ -324,6 +330,7 @@ void loop()
     toggleSettings();
     soundControl();
     flashCoinSlotLEDs();
+    flushAndroidTerminal();
 }
 
 
@@ -720,23 +727,116 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
             stickSpeed = (map(joystickPosition, 0, 255, -drivespeed1, drivespeed1));
           }          
 
-          if ( abs(joystickPosition-128) < joystickFootDeadZoneRange)
+            if ( abs(joystickPosition-128) < joystickFootDeadZoneRange)
           {
-              footDriveSpeed = 0;
-          } else if (footDriveSpeed < stickSpeed)
+  
+                // This is RAMP DOWN code when stick is now at ZERO but prior FootSpeed > 20
+                
+                if (abs(footDriveSpeed) > 50)
+                {   
+                    if (footDriveSpeed > 0)
+                    {
+                        footDriveSpeed -= 3;
+                    } else
+                    {
+                        footDriveSpeed += 3;
+                    }
+                    
+                    #ifdef SHADOW_VERBOSE      
+                        output += "ZERO FAST RAMP: footSpeed: ";
+                        output += footDriveSpeed;
+                        output += "\nStick Speed: ";
+                        output += stickSpeed;
+                        output += "\n\r";
+                    #endif
+                    
+                } else if (abs(footDriveSpeed) > 20)
+                {   
+                    if (footDriveSpeed > 0)
+                    {
+                        footDriveSpeed -= 2;
+                    } else
+                    {
+                        footDriveSpeed += 2;
+                    }
+                    
+                    #ifdef SHADOW_VERBOSE      
+                        output += "ZERO MID RAMP: footSpeed: ";
+                        output += footDriveSpeed;
+                        output += "\nStick Speed: ";
+                        output += stickSpeed;
+                        output += "\n\r";
+                    #endif
+                    
+                } else
+                {        
+                    footDriveSpeed = 0;
+                }
+              
+          } else 
           {
-              if ((stickSpeed-footDriveSpeed)>(ramping+1))
-                  footDriveSpeed+=ramping;
-              else
-                  footDriveSpeed = stickSpeed;
-          }
-          else if (footDriveSpeed > stickSpeed)
-          {
-              if ((footDriveSpeed-stickSpeed)>(ramping+1))
-                  footDriveSpeed-=ramping;
-              else
+      
+              isFootMotorStopped = false;
+              
+              if (footDriveSpeed < stickSpeed)
+              {
+                
+                  if ((stickSpeed-footDriveSpeed)>(ramping+1))
+                  {
+                    footDriveSpeed+=ramping;
+                      
+                    #ifdef SHADOW_VERBOSE      
+                        output += "RAMPING UP: footSpeed: ";
+                        output += footDriveSpeed;
+                        output += "\nStick Speed: ";
+                        output += stickSpeed;
+                        output += "\n\r";
+                    #endif
+                      
+                  } else
+                      footDriveSpeed = stickSpeed;
+                  
+              } else if (footDriveSpeed > stickSpeed)
+              {
+            
+                  if ((footDriveSpeed-stickSpeed)>(ramping+1))
+                  {
+                    
+                    footDriveSpeed-=ramping;
+                      
+                    #ifdef SHADOW_VERBOSE      
+                        output += "RAMPING DOWN: footSpeed: ";
+                        output += footDriveSpeed;
+                        output += "\nStick Speed: ";
+                        output += stickSpeed;
+                        output += "\n\r";
+                    #endif
+                    
+                  } else
+                      footDriveSpeed = stickSpeed;  
+              } else
+              {
                   footDriveSpeed = stickSpeed;  
+              }
           }
+
+//          if ( abs(joystickPosition-128) < joystickFootDeadZoneRange)
+//          {
+//              footDriveSpeed = 0;
+//          } else if (footDriveSpeed < stickSpeed)
+//          {
+//              if ((stickSpeed-footDriveSpeed)>(ramping+1))
+//                  footDriveSpeed+=ramping;
+//              else
+//                  footDriveSpeed = stickSpeed;
+//          }
+//          else if (footDriveSpeed > stickSpeed)
+//          {
+//              if ((footDriveSpeed-stickSpeed)>(ramping+1))
+//                  footDriveSpeed-=ramping;
+//              else
+//                  footDriveSpeed = stickSpeed;  
+//          }
           
           turnnum = (myPS3->getAnalogHat(LeftHatX));
 
@@ -938,12 +1038,12 @@ void ps3ToggleSettings(PS3BT* myPS3 = PS3Nav)
     
     if(myPS3->getButtonPress(L2)&&myPS3->getButtonClick(CIRCLE))
     {
-//        #ifdef SHADOW_DEBUG
-//          output += "Enabling the Dome Automation\r\n";
-//        #endif
-//        isAutomateDomeOn = true;
-//        trigger.play(52);
-    }
+        #ifdef SHADOW_DEBUG
+          output += "Play Random Blaster Sounds.\r\n";
+        #endif
+		    // Play Random Blaster Sound
+        trigger.play(random(69,76));
+	}
 }
 
 void processSoundCommand(char soundCommand)
@@ -1204,9 +1304,9 @@ void ps3soundControl(PS3BT* myPS3 = PS3Nav, int controllerNumber = 1)
 	      if (myPS3->getButtonClick(UP))          processSoundCommand('9');    
 	      else if (myPS3->getButtonClick(RIGHT))  processSoundCommand('0');    
 	      else if (myPS3->getButtonClick(DOWN))   processSoundCommand('A');    
-	      else if (myPS3->getButtonClick(LEFT))   processSoundCommand('B');
-              else if (myPS3->getButtonClick(CROSS))  processSoundCommand('+');
-              else if (myPS3->getButtonClick(CIRCLE)) processSoundCommand('-');
+	      else if (myPS3->getButtonClick(LEFT))   processSoundCommand('C');
+        else if (myPS3->getButtonClick(CROSS))  processSoundCommand('+');
+        else if (myPS3->getButtonClick(CIRCLE)) processSoundCommand('-');
 	    } 
 #ifdef EXTRA_SOUNDS
         break;
@@ -1469,3 +1569,15 @@ void testPS3Controller(PS3BT* myPS3 = PS3Nav)
     }          
 }
 #endif
+
+void flushAndroidTerminal()
+{
+    if (output != "")
+    {
+        if (Serial) Serial.println(output);
+        if (SerialBT.connected)
+            SerialBT.println(output);
+            SerialBT.send();
+        output = ""; // Reset output string
+    }
+}
