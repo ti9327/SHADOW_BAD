@@ -223,7 +223,7 @@ int ps2xError = 0; // part of the ps2x lib
 byte ps2xType = 0; // part of the ps2x lib
 */
 
-byte vol = 0; // 0 = full volume, 255 off
+byte vol = 40; // 0 = full volume, 255 off
 boolean isStickEnabled = true;
 byte isAutomateDomeOn = false;
 unsigned long automateMillis = 0;
@@ -308,6 +308,8 @@ void setup()
     //Setup for Dome Data Transfer
     Serial3.begin(57600);//start the library, pass in the data details and the name of the serial port.
     ET.begin(details(domeData), &Serial3);
+
+    trigger.play(56);
 }
 
 boolean readUSB()
