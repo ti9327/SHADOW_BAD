@@ -5,7 +5,7 @@
 //                             Written By: KnightShade
 //                        Inspired by the PADAWAN by danf
 // =======================================================================================
-// Latest
+//
 //         This program is free software: you can redistribute it and/or modify it .
 //         This program is distributed in the hope that it will be useful,
 //         but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -58,8 +58,7 @@
 String PS3MoveNavigatonPrimaryMAC = "00:07:04:0A:B4:3F"; //If using multiple controlers, designate a primary
 
 
-byte drivespeed1 = 127;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
-//byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
+byte drivespeed1 = 100;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
 
 byte turnspeed = 75; //50;     // the higher this number the faster it will spin in place, lower - easier to control.
 // Recommend beginner: 40 to 50, experienced: 50 $ up, I like 75
@@ -77,7 +76,7 @@ byte joystickDomeDeadZoneRange = 10;  // For controllers that centering problems
 
 byte driveDeadBandRange = 10;     // Used to set the Sabertooth DeadZone for foot motors
 
-int invertTurnDirection = -1;   //This may need to be set to 1 for some configurations
+int invertTurnDirection = 1;   //This may need to be set to 1 for some configurations
 
 byte domeAutoSpeed = 127;     // Speed used when dome automation is active (1- 127)
 int time360DomeTurn = 2500;  // milliseconds for dome to complete 360 turn at domeAutoSpeed
@@ -277,7 +276,7 @@ int btnLeft_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnLeft_MD_func = 3;
+int btnLeft_MD_func = 4;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -345,7 +344,7 @@ int btnRight_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnRight_MD_func = 13;
+int btnRight_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -685,7 +684,7 @@ int btnDown_L2_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnDown_L2_MD_func = 7;
+int btnDown_L2_MD_func = 59;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -1293,11 +1292,11 @@ int btnDown_PS_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow Up + L1
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnUP_L1_type = 1;
+int btnUP_L1_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnUP_L1_MD_func = 10;
+int btnUP_L1_MD_func = 8;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -1370,7 +1369,7 @@ int btnLeft_L1_MD_func = 3;
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnLeft_L1_cust_MP3_num = 190;
+int btnLeft_L1_cust_MP3_num = 182;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1982,7 +1981,7 @@ int btnLeft_L1_L2_MD_func = 8;
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnLeft_L1_L2_cust_MP3_num = 185;
+int btnLeft_L1_L2_cust_MP3_num = 6;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -3167,22 +3166,7 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
     {
       int joystickPosition = myPS3->getAnalogHat(LeftHatY);
       isFootMotorStopped = false;
-//      if ((myPS3->getButtonPress(L2)) && (!myPS3->getButtonPress(L1)))
-//      {
-//        int throttle = 0;
-//        if (joystickPosition < 127)
-//        {
-//          throttle = joystickPosition - myPS3->getAnalogButton(L2);
-//        } else
-//        {
-//          throttle = joystickPosition + myPS3->getAnalogButton(L2);
-//        }
-//
-//        stickSpeed = (map(throttle, -255, 510, -drivespeed2, drivespeed2));
-//      } else
-//      {
-        stickSpeed = (map(joystickPosition, 0, 255, -drivespeed1, drivespeed1));
-//      }
+      stickSpeed = (map(joystickPosition, 0, 255, -drivespeed1, drivespeed1));
 
       if ( abs(joystickPosition - 128) < joystickFootDeadZoneRange)
       {
@@ -3191,10 +3175,10 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
         {
           if (footDriveSpeed > 0)
           {
-            footDriveSpeed -= 2;
+            footDriveSpeed -= 3;
           } else
           {
-            footDriveSpeed += 2;
+            footDriveSpeed += 3;
           }
 
 #ifdef SHADOW_VERBOSE
@@ -3209,10 +3193,10 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
         {
           if (footDriveSpeed > 0)
           {
-            footDriveSpeed -= 1;
+            footDriveSpeed -= 2;
           } else
           {
-            footDriveSpeed += 1;
+            footDriveSpeed += 2;
           }
 
 #ifdef SHADOW_VERBOSE
@@ -3942,7 +3926,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
   if (type == 2) // Custom Button Configuration
   {
 
-    if ((MP3_num > 101 && MP3_num < 226) || (MP3_num >= 1 && MP3_num < 7)) // Valid Custom Sound Range Selected - Play Custom Sound Selection
+    if ((MP3_num > 175 && MP3_num < 226) || (MP3_num >= 1 && MP3_num <= 6)) // Valid Custom Sound Range Selected - Play Custom Sound Selection
     {
 
       switch (MP3_num)
@@ -3978,7 +3962,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
         case 5:
           // Play Random sound from Sound bank (bank #9)
           strMDCmd = "$9";
-          strMDCmd += String(random(4, 18));
+          strMDCmd += String(random(4, 20));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
@@ -3989,7 +3973,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
-
+          
         case 102:
           Serial1.print("$52\r");
           break;
@@ -4017,7 +4001,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
         case 181:
           Serial1.print("$86\r");
           break;
-          
+        
         case 182:
           Serial1.print("$87\r");
           break;

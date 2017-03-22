@@ -55,11 +55,11 @@
 // ---------------------------------------------------------------------------------------
 
 //Primary Controller
-String PS3MoveNavigatonPrimaryMAC = "00:07:04:0A:B4:3F"; //If using multiple controlers, designate a primary
+String PS3MoveNavigatonPrimaryMAC = "00:06:F7:8F:36:7B"; //If using multiple controlers, designate a primary
 
 
-byte drivespeed1 = 127;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
-//byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
+byte drivespeed1 = 70;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
+byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
 
 byte turnspeed = 75; //50;     // the higher this number the faster it will spin in place, lower - easier to control.
 // Recommend beginner: 40 to 50, experienced: 50 $ up, I like 75
@@ -67,7 +67,7 @@ byte turnspeed = 75; //50;     // the higher this number the faster it will spin
 byte domespeed = 127;    // If using a speed controller for the dome, sets the top speed
 // Use a number up to 127 for serial
 
-byte ramping = 3; //3;   // Ramping - the lower this number the longer R2 will take to speedup or slow down,
+byte ramping = 6; //3;   // Ramping - the lower this number the longer R2 will take to speedup or slow down,
 // change this by increments of 1
 
 int footDriveSpeed = 0;
@@ -80,7 +80,7 @@ byte driveDeadBandRange = 10;     // Used to set the Sabertooth DeadZone for foo
 int invertTurnDirection = -1;   //This may need to be set to 1 for some configurations
 
 byte domeAutoSpeed = 127;     // Speed used when dome automation is active (1- 127)
-int time360DomeTurn = 2500;  // milliseconds for dome to complete 360 turn at domeAutoSpeed
+int time360DomeTurn = 1250;  // milliseconds for dome to complete 360 turn at domeAutoSpeed
 
 //#define TEST_CONROLLER   //Support coming soon
 #define SHADOW_DEBUG       //uncomment this for console DEBUG output
@@ -685,12 +685,12 @@ int btnDown_L2_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnDown_L2_MD_func = 7;
+int btnDown_L2_MD_func = 2;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnDown_L2_cust_MP3_num = 178;
+int btnDown_L2_cust_MP3_num = 0;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1293,16 +1293,16 @@ int btnDown_PS_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow Up + L1
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnUP_L1_type = 1;
+int btnUP_L1_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnUP_L1_MD_func = 10;
+int btnUP_L1_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnUP_L1_cust_MP3_num = 183;
+int btnUP_L1_cust_MP3_num = 205;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1361,16 +1361,16 @@ int btnUP_L1_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow Left + L1
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnLeft_L1_type = 2;
+int btnLeft_L1_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnLeft_L1_MD_func = 3;
+int btnLeft_L1_MD_func = 7;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnLeft_L1_cust_MP3_num = 190;
+int btnLeft_L1_cust_MP3_num = 0;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1433,12 +1433,12 @@ int btnRight_L1_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnRight_L1_MD_func = 5;
+int btnRight_L1_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnRight_L1_cust_MP3_num = 186;
+int btnRight_L1_cust_MP3_num = 102;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1501,12 +1501,12 @@ int btnDown_L1_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnDown_L1_MD_func = 9;
+int btnDown_L1_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnDown_L1_cust_MP3_num = 188;
+int btnDown_L1_cust_MP3_num = 204;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1560,6 +1560,74 @@ int btnDown_L1_DP9_stay_open_time = 5; // in seconds (1 to 30)
 boolean btnDown_L1_use_DP10 = false;
 int btnDown_L1_DP10_open_start_delay = 1; // in seconds (0 to 30)
 int btnDown_L1_DP10_stay_open_time = 5; // in seconds (1 to 30)
+
+//---------------------------------
+// CONFIGURE: Cross + L2
+//---------------------------------
+//1 = Std MarcDuino Function, 2 = Custom Function
+int btnCross_L2_type = 2;
+
+// IF Std MarcDuino Function (type=1)
+// Enter MarcDuino Function Code (1 - 75) (See Above)
+int btnCross_L2_MD_func = 26;
+
+// IF Custom Function (type=2)
+// CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
+// Valid values: 0 or 182 - 200
+int btnCross_L2_cust_MP3_num = 0;
+
+// CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
+// Valid values: 0, 1 to 8  (0 - Not used)
+int btnCross_L2_cust_LD_type = 0;
+
+// IF Custom Logic Display = 8 (custom text), enter custom display text here
+String btnCross_L2_cust_LD_text = "";
+
+// CUSTOM PANEL SETTING: Pick from the Std MD Panel Functions or Custom (See Above)
+// Valid Values: 0, 1 to 9 (0 = Not used)
+int btnCross_L2_cust_panel = 0;
+
+// IF Custom Panel Setting = 9 (custom panel sequence)
+// Dome Panel #1
+boolean btnCross_L2_use_DP1 = false;
+int btnCross_L2_DP1_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP1_stay_open_time = 5; // in seconds (1 to 30)
+// Dome Panel #2
+boolean btnCross_L2_use_DP2 = false;
+int btnCross_L2_DP2_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP2_stay_open_time = 5; // in seconds (1 to 30)
+// Dome Panel #3
+boolean btnCross_L2_use_DP3 = false;
+int btnCross_L2_DP3_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP3_stay_open_time = 5; // in seconds (1 to 30)
+// Dome Panel #4
+boolean btnCross_L2_use_DP4 = false;
+int btnCross_L2_DP4_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP4_stay_open_time = 5; // in seconds (1 to 30)
+// Dome Panel #5
+boolean btnCross_L2_use_DP5 = false;
+int btnCross_L2_DP5_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP5_stay_open_time = 5; // in seconds (1 to 30)
+// Dome Panel #6
+boolean btnCross_L2_use_DP6 = false;
+int btnCross_L2_DP6_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP6_stay_open_time = 5; // in seconds (1 to 30)
+// Dome Panel #7
+boolean btnCross_L2_use_DP7 = false;
+int btnCross_L2_DP7_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP7_stay_open_time = 5; // in seconds (1 to 30)
+// Dome Panel #8
+boolean btnCross_L2_use_DP8 = false;
+int btnCross_L2_DP8_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP8_stay_open_time = 5; // in seconds (1 to 30)
+// Dome Panel #9
+boolean btnCross_L2_use_DP9 = false;
+int btnCross_L2_DP9_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP9_stay_open_time = 5; // in seconds (1 to 30)
+// Dome Panel #10
+boolean btnCross_L2_use_DP10 = false;
+int btnCross_L2_DP10_open_start_delay = 1; // in seconds (0 to 30)
+int btnCross_L2_DP10_stay_open_time = 5; // in seconds (1 to 30)
 
 //---------------------------------
 // CONFIGURE: Cross + L1
@@ -1773,12 +1841,12 @@ int btnUP_L1_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnUP_L1_L2_MD_func = 8;
+int btnUP_L1_L2_MD_func = 21;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnUP_L1_L2_cust_MP3_num = 5;
+int btnUP_L1_L2_cust_MP3_num = 186;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1841,12 +1909,12 @@ int btnRight_L1_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnRight_L1_L2_MD_func = 8;
+int btnRight_L1_L2_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnRight_L1_L2_cust_MP3_num = 184;
+int btnRight_L1_L2_cust_MP3_num = 190;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1905,16 +1973,16 @@ int btnRight_L1_L2_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow Down + L1 + L2
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnDown_L1_L2_type = 2;
+int btnDown_L1_L2_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnDown_L1_L2_MD_func = 8;
+int btnDown_L1_L2_MD_func = 10;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnDown_L1_L2_cust_MP3_num = 189;
+int btnDown_L1_L2_cust_MP3_num = 0;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1973,16 +2041,16 @@ int btnDown_L1_L2_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow Left + L1 + L2
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnLeft_L1_L2_type = 2;
+int btnLeft_L1_L2_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnLeft_L1_L2_MD_func = 8;
+int btnLeft_L1_L2_MD_func = 58;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnLeft_L1_L2_cust_MP3_num = 185;
+int btnLeft_L1_L2_cust_MP3_num = 0;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -2045,12 +2113,12 @@ int btnCross_L1_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnCross_L1_L2_MD_func = 8;
+int btnCross_L1_L2_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnCross_L1_L2_cust_MP3_num = 201;
+int btnCross_L1_L2_cust_MP3_num = 6;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -2450,35 +2518,14 @@ int motorControllerBaudRate = 9600; // Set the baud rate for the Syren motor con
 
 int marcDuinoBaudRate = 9600; // Set the baud rate for the Marcduino Connection
 
+#define FireExtinguisherPin 12
+
 #define ENABLE_UHS_DEBUGGING 1
 
 // ---------------------------------------------------------------------------------------
 //                          Sound Settings
 // ---------------------------------------------------------------------------------------
 //#define EXTRA_SOUNDS
-
-// ---------------------------------------------------------------------------------------
-//                          Utility Arm Settings
-// ---------------------------------------------------------------------------------------
-
-//Utility Arm Contribution by Dave C.
-int utilArmClosedPos = 0;    // variable to store the servo closed position
-int utilArmOpenPos = 140;    // variable to store the servo Opened position
-
-// Check value, open = true, closed = false
-boolean isUtilArmTopOpen = false;
-boolean isUtilArmBottomOpen = false;
-
-int UtilArmBottomPos = 0;
-int UtilArmTopPos = 0;
-
-const int UTIL_ARM_TOP = 1;
-const int UTIL_ARM_BOTTOM = 2;
-
-const int PanelClosedPos = 0;    // variable to store the servo closed position
-const int PanelOpenPos = 140;    // variable to store the servo closed position
-
-boolean isPanelsOpen = false;
 
 // ---------------------------------------------------------------------------------------
 //                          LED Settings
@@ -2503,8 +2550,41 @@ int coinSlotLedState[numberOfCoinSlotLEDs]; // Array indicating the state of the
 #include <spi4teensy3.h>
 #endif
 #include <Sabertooth.h>
-
+#include <Servo.h>
 #include <LedControl.h>
+
+// ---------------------------------------------------------------------------------------
+//                          Utility Arm Settings
+// ---------------------------------------------------------------------------------------
+
+//Utility Arm Contribution by Dave C.
+Servo UtilArmTopServo;  // create servo object to control a servo 
+Servo UtilArmBottomServo;  // create servo object to control a servo
+Servo FireExtinguisherServo; // create servo object to control a servo
+
+const int UTILITY_ARM_TOP_PIN   = 9;
+const int UTILITY_ARM_BOTTOM_PIN  = 11;
+
+int utilArmClosedPos = 0;    // variable to store the servo closed position
+int utilArmOpenPos = 140;    // variable to store the servo Opened position
+
+int fireExtinguisherClosedPos = 100;    // variable to store the servo closed position 
+int fireExtinguisherOpenPos = 75; // variable to store the servo Opened position
+
+// Check value, open = true, closed = false
+boolean isUtilArmTopOpen = false;
+boolean isUtilArmBottomOpen = false;
+
+int UtilArmBottomPos = 0;
+int UtilArmTopPos = 0;
+
+const int UTIL_ARM_TOP = 1;
+const int UTIL_ARM_BOTTOM = 2;
+
+const int PanelClosedPos = 0;    // variable to store the servo closed position
+const int PanelOpenPos = 140;    // variable to store the servo closed position
+
+boolean isPanelsOpen = false;
 
 // ---------------------------------------------------------------------------------------
 //                          Variables
@@ -2685,12 +2765,17 @@ void setup()
 
   closePanels();
 
-  //Setup for Utility Arm Servo's
+//Setup for Utility Arm Servo's    
+  UtilArmTopServo.attach(UTILITY_ARM_TOP_PIN);  
+  UtilArmBottomServo.attach(UTILITY_ARM_BOTTOM_PIN);
   closeUtilArm(UTIL_ARM_TOP);
   closeUtilArm(UTIL_ARM_BOTTOM);
 
+  FireExtinguisherServo.attach(FireExtinguisherPin);
+  FireExtinguisherServo.write(fireExtinguisherClosedPos);
+  
   // Set volume on MP3 Trigger to Max
-  Serial1.print("$f\r");
+  Serial1.print("$m\r");
   
   //Setup for Coin Slot LEDs
   for (int i = 0; i < numberOfCoinSlotLEDs; i++)
@@ -3442,78 +3527,16 @@ void ps3ToggleSettings(PS3BT* myPS3 = PS3Nav)
 
   if ((myPS3->getButtonPress(L2) && !myPS3->getButtonPress(L1)) && myPS3->getButtonClick(CROSS))
   {
-    if (isAutomateDomeOn)
-    {
-#ifdef SHADOW_DEBUG
-      output += "Disabling the Dome Automation\r\n";
-#endif
-      isAutomateDomeOn = false;
-      domeStatus = 0;
-      domeTargetPosition = 0;
-      SyR->stop();
-      action = 0;
-      Serial1.print("$93\r");
-    }
-    else
-    {
-#ifdef SHADOW_DEBUG
-      output += "Enabling the Dome Automation\r\n";
-#endif
-      isAutomateDomeOn = true;
-      Serial1.print("$92\r");
-    }
+    wavePanels();
   }
 
   if ((myPS3->getButtonPress(L2) && !myPS3->getButtonPress(L1)) && myPS3->getButtonClick(CIRCLE))
   {
-    if (isQuietModeOn)
-    {
-#ifdef SHADOW_DEBUG
-      output += "Enabling Sound Automation/Mid-Awake Mode\r\n";
-#endif
-      btnCircle_L2_MD_func = 14;
-      isQuietModeOn = false;
-    }
-    else
-    {
-#ifdef SHADOW_DEBUG
-      output += "Disabling Sound Automation/Mid-Awake Mode\r\n";
-#endif
-      btnCircle_L2_MD_func = 11;
-      isQuietModeOn = true;
-    }
-
-    marcDuinoButtonPush(btnCircle_L2_type, btnCircle_L2_MD_func, btnCircle_L2_cust_MP3_num, btnCircle_L2_cust_LD_type, btnCircle_L2_cust_LD_text, btnCircle_L2_cust_panel,
-                        btnCircle_L2_use_DP1,
-                        btnCircle_L2_DP1_open_start_delay,
-                        btnCircle_L2_DP1_stay_open_time,
-                        btnCircle_L2_use_DP2,
-                        btnCircle_L2_DP2_open_start_delay,
-                        btnCircle_L2_DP2_stay_open_time,
-                        btnCircle_L2_use_DP3,
-                        btnCircle_L2_DP3_open_start_delay,
-                        btnCircle_L2_DP3_stay_open_time,
-                        btnCircle_L2_use_DP4,
-                        btnCircle_L2_DP4_open_start_delay,
-                        btnCircle_L2_DP4_stay_open_time,
-                        btnCircle_L2_use_DP5,
-                        btnCircle_L2_DP5_open_start_delay,
-                        btnCircle_L2_DP5_stay_open_time,
-                        btnCircle_L2_use_DP6,
-                        btnCircle_L2_DP6_open_start_delay,
-                        btnCircle_L2_DP6_stay_open_time,
-                        btnCircle_L2_use_DP7,
-                        btnCircle_L2_DP7_open_start_delay,
-                        btnCircle_L2_DP7_stay_open_time,
-                        btnCircle_L2_use_DP8,
-                        btnCircle_L2_DP8_open_start_delay,
-                        btnCircle_L2_DP8_stay_open_time,
-                        btnCircle_L2_use_DP9,
-                        btnCircle_L2_DP9_open_start_delay,
-                        btnCircle_L2_DP9_stay_open_time,
-                        btnCircle_L2_use_DP10,
-                        btnCircle_L2_DP10_open_start_delay,
-                        btnCircle_L2_DP10_stay_open_time);
+    #ifdef SHADOW_DEBUG
+        output += "Pulsing Fire Extinguish\r\n";
+      #endif
+      
+      fireExtinguisher();
   }
 
   if ((myPS3->getButtonPress(L2) && myPS3->getButtonPress(L1)) && myPS3->getButtonClick(CROSS))
@@ -3553,7 +3576,37 @@ void ps3ToggleSettings(PS3BT* myPS3 = PS3Nav)
 
   if ((myPS3->getButtonPress(L2) && myPS3->getButtonPress(L1)) && myPS3->getButtonClick(CIRCLE))
   {
-    wavePanels();
+    marcDuinoButtonPush(btnCircle_L1_L2_type, btnCircle_L1_L2_MD_func, btnCircle_L1_L2_cust_MP3_num, btnCircle_L1_L2_cust_LD_type, btnCircle_L1_L2_cust_LD_text, btnCircle_L1_L2_cust_panel,
+                    btnCircle_L1_L2_use_DP1,
+                    btnCircle_L1_L2_DP1_open_start_delay,
+                    btnCircle_L1_L2_DP1_stay_open_time,
+                    btnCircle_L1_L2_use_DP2,
+                    btnCircle_L1_L2_DP2_open_start_delay,
+                    btnCircle_L1_L2_DP2_stay_open_time,
+                    btnCircle_L1_L2_use_DP3,
+                    btnCircle_L1_L2_DP3_open_start_delay,
+                    btnCircle_L1_L2_DP3_stay_open_time,
+                    btnCircle_L1_L2_use_DP4,
+                    btnCircle_L1_L2_DP4_open_start_delay,
+                    btnCircle_L1_L2_DP4_stay_open_time,
+                    btnCircle_L1_L2_use_DP5,
+                    btnCircle_L1_L2_DP5_open_start_delay,
+                    btnCircle_L1_L2_DP5_stay_open_time,
+                    btnCircle_L1_L2_use_DP6,
+                    btnCircle_L1_L2_DP6_open_start_delay,
+                    btnCircle_L1_L2_DP6_stay_open_time,
+                    btnCircle_L1_L2_use_DP7,
+                    btnCircle_L1_L2_DP7_open_start_delay,
+                    btnCircle_L1_L2_DP7_stay_open_time,
+                    btnCircle_L1_L2_use_DP8,
+                    btnCircle_L1_L2_DP8_open_start_delay,
+                    btnCircle_L1_L2_DP8_stay_open_time,
+                    btnCircle_L1_L2_use_DP9,
+                    btnCircle_L1_L2_DP9_open_start_delay,
+                    btnCircle_L1_L2_DP9_stay_open_time,
+                    btnCircle_L1_L2_use_DP10,
+                    btnCircle_L1_L2_DP10_open_start_delay,
+                    btnCircle_L1_L2_DP10_stay_open_time);
   }
 }
 
@@ -5439,94 +5492,29 @@ void waveUtilArm(int arm)
 void moveUtilArm(int arm, int position)
 {
   switch (arm)
-  {
-    case UTIL_ARM_TOP:
-      if (position == utilArmClosedPos)
-      {
-        btnCross_MD_func = 41;
-        isUtilArmTopOpen = false;
-      } else
-      {
-        btnCross_MD_func = 40;
-        isUtilArmTopOpen = true;
-      }
-      marcDuinoButtonPush(btnCross_type, btnCross_MD_func, btnCross_cust_MP3_num, btnCross_cust_LD_type, btnCross_cust_LD_text, btnCross_cust_panel,
-                          btnCross_use_DP1,
-                          btnCross_DP1_open_start_delay,
-                          btnCross_DP1_stay_open_time,
-                          btnCross_use_DP2,
-                          btnCross_DP2_open_start_delay,
-                          btnCross_DP2_stay_open_time,
-                          btnCross_use_DP3,
-                          btnCross_DP3_open_start_delay,
-                          btnCross_DP3_stay_open_time,
-                          btnCross_use_DP4,
-                          btnCross_DP4_open_start_delay,
-                          btnCross_DP4_stay_open_time,
-                          btnCross_use_DP5,
-                          btnCross_DP5_open_start_delay,
-                          btnCross_DP5_stay_open_time,
-                          btnCross_use_DP6,
-                          btnCross_DP6_open_start_delay,
-                          btnCross_DP6_stay_open_time,
-                          btnCross_use_DP7,
-                          btnCross_DP7_open_start_delay,
-                          btnCross_DP7_stay_open_time,
-                          btnCross_use_DP8,
-                          btnCross_DP8_open_start_delay,
-                          btnCross_DP8_stay_open_time,
-                          btnCross_use_DP9,
-                          btnCross_DP9_open_start_delay,
-                          btnCross_DP9_stay_open_time,
-                          btnCross_use_DP10,
-                          btnCross_DP10_open_start_delay,
-                          btnCross_DP10_stay_open_time);
-      break;
-    case UTIL_ARM_BOTTOM:
-      if (position == utilArmClosedPos)
-      {
-        btnCircle_MD_func = 39;
-        isUtilArmBottomOpen = false;
-      } else
-      {
-        btnCircle_MD_func = 38;
-        isUtilArmBottomOpen = true;
-      }
-      marcDuinoButtonPush(btnCircle_type, btnCircle_MD_func, btnCircle_cust_MP3_num, btnCircle_cust_LD_type, btnCircle_cust_LD_text, btnCircle_cust_panel,
-                          btnCircle_use_DP1,
-                          btnCircle_DP1_open_start_delay,
-                          btnCircle_DP1_stay_open_time,
-                          btnCircle_use_DP2,
-                          btnCircle_DP2_open_start_delay,
-                          btnCircle_DP2_stay_open_time,
-                          btnCircle_use_DP3,
-                          btnCircle_DP3_open_start_delay,
-                          btnCircle_DP3_stay_open_time,
-                          btnCircle_use_DP4,
-                          btnCircle_DP4_open_start_delay,
-                          btnCircle_DP4_stay_open_time,
-                          btnCircle_use_DP5,
-                          btnCircle_DP5_open_start_delay,
-                          btnCircle_DP5_stay_open_time,
-                          btnCircle_use_DP6,
-                          btnCircle_DP6_open_start_delay,
-                          btnCircle_DP6_stay_open_time,
-                          btnCircle_use_DP7,
-                          btnCircle_DP7_open_start_delay,
-                          btnCircle_DP7_stay_open_time,
-                          btnCircle_use_DP8,
-                          btnCircle_DP8_open_start_delay,
-                          btnCircle_DP8_stay_open_time,
-                          btnCircle_use_DP9,
-                          btnCircle_DP9_open_start_delay,
-                          btnCircle_DP9_stay_open_time,
-                          btnCircle_use_DP10,
-                          btnCircle_DP10_open_start_delay,
-                          btnCircle_DP10_stay_open_time);
-      break;
-  }
+    {
+      case UTIL_ARM_TOP:
+        UtilArmTopServo.write(position);
+        if ( position == utilArmClosedPos)
+        {
+          isUtilArmTopOpen = false;
+        } else
+        {
+          isUtilArmTopOpen = true;
+        }
+        break;
+      case UTIL_ARM_BOTTOM:  
+        UtilArmBottomServo.write(position);
+        if ( position == utilArmClosedPos)
+        {
+          isUtilArmBottomOpen = false;
+        } else
+        {
+          isUtilArmBottomOpen = true;
+        }
+        break;
+    }
 }
-
 
 void openPanels()
 {
@@ -5565,49 +5553,55 @@ void movePanels(int position)
       #ifdef SHADOW_DEBUG
           output += "Opening All Panels\r\n";
       #endif
-      btnCircle_L1_L2_MD_func = 30;
+      btnCross_L2_MD_func = 30;
       break;
     case PanelClosedPos:
       #ifdef SHADOW_DEBUG
           output += "Closing All Panels\r\n";
       #endif
-      btnCircle_L1_L2_MD_func = 33;
+      btnCross_L2_MD_func = 33;
       break;
   }
   
-  marcDuinoButtonPush(btnCircle_L1_L2_type, btnCircle_L1_L2_MD_func, btnCircle_L1_L2_cust_MP3_num, btnCircle_L1_L2_cust_LD_type, btnCircle_L1_L2_cust_LD_text, btnCircle_L1_L2_cust_panel,
-                    btnCircle_L1_L2_use_DP1,
-                    btnCircle_L1_L2_DP1_open_start_delay,
-                    btnCircle_L1_L2_DP1_stay_open_time,
-                    btnCircle_L1_L2_use_DP2,
-                    btnCircle_L1_L2_DP2_open_start_delay,
-                    btnCircle_L1_L2_DP2_stay_open_time,
-                    btnCircle_L1_L2_use_DP3,
-                    btnCircle_L1_L2_DP3_open_start_delay,
-                    btnCircle_L1_L2_DP3_stay_open_time,
-                    btnCircle_L1_L2_use_DP4,
-                    btnCircle_L1_L2_DP4_open_start_delay,
-                    btnCircle_L1_L2_DP4_stay_open_time,
-                    btnCircle_L1_L2_use_DP5,
-                    btnCircle_L1_L2_DP5_open_start_delay,
-                    btnCircle_L1_L2_DP5_stay_open_time,
-                    btnCircle_L1_L2_use_DP6,
-                    btnCircle_L1_L2_DP6_open_start_delay,
-                    btnCircle_L1_L2_DP6_stay_open_time,
-                    btnCircle_L1_L2_use_DP7,
-                    btnCircle_L1_L2_DP7_open_start_delay,
-                    btnCircle_L1_L2_DP7_stay_open_time,
-                    btnCircle_L1_L2_use_DP8,
-                    btnCircle_L1_L2_DP8_open_start_delay,
-                    btnCircle_L1_L2_DP8_stay_open_time,
-                    btnCircle_L1_L2_use_DP9,
-                    btnCircle_L1_L2_DP9_open_start_delay,
-                    btnCircle_L1_L2_DP9_stay_open_time,
-                    btnCircle_L1_L2_use_DP10,
-                    btnCircle_L1_L2_DP10_open_start_delay,
-                    btnCircle_L1_L2_DP10_stay_open_time);
+  marcDuinoButtonPush(btnCross_L2_type, btnCross_L2_MD_func, btnCross_L2_cust_MP3_num, btnCross_L2_cust_LD_type, btnCross_L2_cust_LD_text, btnCross_L2_cust_panel,
+                    btnCross_L2_use_DP1,
+                    btnCross_L2_DP1_open_start_delay,
+                    btnCross_L2_DP1_stay_open_time,
+                    btnCross_L2_use_DP2,
+                    btnCross_L2_DP2_open_start_delay,
+                    btnCross_L2_DP2_stay_open_time,
+                    btnCross_L2_use_DP3,
+                    btnCross_L2_DP3_open_start_delay,
+                    btnCross_L2_DP3_stay_open_time,
+                    btnCross_L2_use_DP4,
+                    btnCross_L2_DP4_open_start_delay,
+                    btnCross_L2_DP4_stay_open_time,
+                    btnCross_L2_use_DP5,
+                    btnCross_L2_DP5_open_start_delay,
+                    btnCross_L2_DP5_stay_open_time,
+                    btnCross_L2_use_DP6,
+                    btnCross_L2_DP6_open_start_delay,
+                    btnCross_L2_DP6_stay_open_time,
+                    btnCross_L2_use_DP7,
+                    btnCross_L2_DP7_open_start_delay,
+                    btnCross_L2_DP7_stay_open_time,
+                    btnCross_L2_use_DP8,
+                    btnCross_L2_DP8_open_start_delay,
+                    btnCross_L2_DP8_stay_open_time,
+                    btnCross_L2_use_DP9,
+                    btnCross_L2_DP9_open_start_delay,
+                    btnCross_L2_DP9_stay_open_time,
+                    btnCross_L2_use_DP10,
+                    btnCross_L2_DP10_open_start_delay,
+                    btnCross_L2_DP10_stay_open_time);
 }
 
+void fireExtinguisher()
+{
+  FireExtinguisherServo.write(fireExtinguisherOpenPos);
+  delay(500);
+  FireExtinguisherServo.write(fireExtinguisherClosedPos); 
+}
 
 // =======================================================================================
 //          Flash Coin Slot LED Function

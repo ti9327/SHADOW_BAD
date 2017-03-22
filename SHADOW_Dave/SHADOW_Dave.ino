@@ -59,7 +59,7 @@ String PS3MoveNavigatonPrimaryMAC = "00:06:F7:C3:E3:9C"; //If using multiple con
 
 
 byte drivespeed1 = 127;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
-byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
+//byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
 
 byte turnspeed = 75; //50;     // the higher this number the faster it will spin in place, lower - easier to control.
                                // Recommend beginner: 40 to 50, experienced: 50 $ up, I like 75
@@ -67,7 +67,7 @@ byte turnspeed = 75; //50;     // the higher this number the faster it will spin
 byte domespeed = 127;    // If using a speed controller for the dome, sets the top speed
                          // Use a number up to 127 for serial
 
-byte ramping = 1; //3;   // Ramping- the lower this number the longer R2 will take to speedup or slow down,
+byte ramping = 7; //3;   // Ramping- the lower this number the longer R2 will take to speedup or slow down,
                          // change this by increments of 1
 
 int footDriveSpeed = 0;
@@ -79,7 +79,7 @@ byte driveDeadBandRange = 10;     // Used to set the Sabertooth DeadZone for foo
 int invertTurnDirection = 1;   //This may need to be set to 1 for some configurations
 
 byte domeAutoSpeed = 127;     // Speed used when dome automation is active (1- 127)
-int time360DomeTurn = 2500;  // milliseconds for dome to complete 360 turn at domeAutoSpeed
+int time360DomeTurn = 1250;  // milliseconds for dome to complete 360 turn at domeAutoSpeed
 
 //#define TEST_CONROLLER   //Support coming soon
 #define SHADOW_DEBUG       //uncomment this for console DEBUG output
@@ -711,21 +711,21 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
       {
           int joystickPosition = myPS3->getAnalogHat(LeftHatY);
           isFootMotorStopped = false;
-          if (myPS3->getButtonPress(L2))
-          {
-            int throttle = 0;
-            if (joystickPosition < 127)
-            {
-                throttle = joystickPosition - myPS3->getAnalogButton(L2);
-            } else
-            {
-                throttle = joystickPosition + myPS3->getAnalogButton(L2);
-            }
-            stickSpeed = (map(throttle, -255, 510, -drivespeed2, drivespeed2));                
-          } else 
-          {
+//          if (myPS3->getButtonPress(L2))
+//          {
+//            int throttle = 0;
+//            if (joystickPosition < 127)
+//            {
+//                throttle = joystickPosition - myPS3->getAnalogButton(L2);
+//            } else
+//            {
+//                throttle = joystickPosition + myPS3->getAnalogButton(L2);
+//            }
+//            stickSpeed = (map(throttle, -255, 510, -drivespeed2, drivespeed2));                
+//          } else 
+//          {
             stickSpeed = (map(joystickPosition, 0, 255, -drivespeed1, drivespeed1));
-          }          
+//          }          
 
             if ( abs(joystickPosition-128) < joystickFootDeadZoneRange)
           {
@@ -736,10 +736,12 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
                 {   
                     if (footDriveSpeed > 0)
                     {
-                        footDriveSpeed -= 3;
+                        //footDriveSpeed -= 3;
+                        footDriveSpeed -= 2;
                     } else
                     {
-                        footDriveSpeed += 3;
+                        //footDriveSpeed += 3;
+                        footDriveSpeed += 2;
                     }
                     
                     #ifdef SHADOW_VERBOSE      
@@ -754,10 +756,12 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
                 {   
                     if (footDriveSpeed > 0)
                     {
-                        footDriveSpeed -= 2;
+                        footDriveSpeed -= 1;
+                        //footDriveSpeed -= 2;
                     } else
                     {
-                        footDriveSpeed += 2;
+                        //footDriveSpeed += 2;
+                        footDriveSpeed += 1;
                     }
                     
                     #ifdef SHADOW_VERBOSE      
