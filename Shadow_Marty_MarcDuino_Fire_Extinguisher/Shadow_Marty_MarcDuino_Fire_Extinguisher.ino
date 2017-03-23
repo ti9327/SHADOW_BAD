@@ -64,7 +64,7 @@ byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127
 byte turnspeed = 75; //50;     // the higher this number the faster it will spin in place, lower - easier to control.
 // Recommend beginner: 40 to 50, experienced: 50 $ up, I like 75
 
-byte domespeed = 127;    // If using a speed controller for the dome, sets the top speed
+byte domespeed = 75;    // If using a speed controller for the dome, sets the top speed
 // Use a number up to 127 for serial
 
 byte ramping = 6; //3;   // Ramping - the lower this number the longer R2 will take to speedup or slow down,
@@ -77,9 +77,9 @@ byte joystickDomeDeadZoneRange = 10;  // For controllers that centering problems
 
 byte driveDeadBandRange = 10;     // Used to set the Sabertooth DeadZone for foot motors
 
-int invertTurnDirection = -1;   //This may need to be set to 1 for some configurations
+int invertTurnDirection = 1;   //This may need to be set to 1 for some configurations
 
-byte domeAutoSpeed = 127;     // Speed used when dome automation is active (1- 127)
+byte domeAutoSpeed = 60;     // Speed used when dome automation is active (1- 127)
 int time360DomeTurn = 1250;  // milliseconds for dome to complete 360 turn at domeAutoSpeed
 
 //#define TEST_CONROLLER   //Support coming soon
@@ -209,7 +209,7 @@ int btnUP_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnUP_MD_func = 11;
+int btnUP_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -345,7 +345,7 @@ int btnRight_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnRight_MD_func = 13;
+int btnRight_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -477,16 +477,16 @@ int btnDown_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow UP + L2
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnUP_L2_type = 1;
+int btnUP_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnUP_L2_MD_func = 58;
+int btnUP_L2_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnUP_L2_cust_MP3_num = 0;
+int btnUP_L2_cust_MP3_num = 3;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1449,7 +1449,7 @@ String btnRight_L1_cust_LD_text = "";
 
 // CUSTOM PANEL SETTING: Pick from the Std MD Panel Functions or Custom (See Above)
 // Valid Values: 0, 1 to 9 (0 = Not used)
-int btnRight_L1_cust_panel = 8;
+int btnRight_L1_cust_panel = 0;
 
 // IF Custom Panel Setting = 9 (custom panel sequence)
 // Dome Panel #1
@@ -1565,7 +1565,7 @@ int btnDown_L1_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Cross + L2
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnCross_L2_type = 2;
+int btnCross_L2_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
@@ -1918,14 +1918,14 @@ int btnRight_L1_L2_cust_MP3_num = 190;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
-int btnRight_L1_L2_cust_LD_type = 0;
+int btnRight_L1_L2_cust_LD_type = 7;
 
 // IF Custom Logic Display = 8 (custom text), enter custom display text here
 String btnRight_L1_L2_cust_LD_text = "";
 
 // CUSTOM PANEL SETTING: Pick from the Std MD Panel Functions or Custom (See Above)
 // Valid Values: 0, 1 to 9 (0 = Not used)
-int btnRight_L1_L2_cust_panel = 0;
+int btnRight_L1_L2_cust_panel = 8;
 
 // IF Custom Panel Setting = 9 (custom panel sequence)
 // Dome Panel #1
@@ -2177,16 +2177,16 @@ int btnCross_L1_L2_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Circle + L1 + L2
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnCircle_L1_L2_type = 1;
+int btnCircle_L1_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnCircle_L1_L2_MD_func = 30;
+int btnCircle_L1_L2_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnCircle_L1_L2_cust_MP3_num = 0;
+int btnCircle_L1_L2_cust_MP3_num = 201;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -3541,37 +3541,57 @@ void ps3ToggleSettings(PS3BT* myPS3 = PS3Nav)
 
   if ((myPS3->getButtonPress(L2) && myPS3->getButtonPress(L1)) && myPS3->getButtonClick(CROSS))
   {
-    marcDuinoButtonPush(btnCross_L1_L2_type, btnCross_L1_L2_MD_func, btnCross_L1_L2_cust_MP3_num, btnCross_L1_L2_cust_LD_type, btnCross_L1_L2_cust_LD_text, btnCross_L1_L2_cust_panel,
-                        btnCross_L1_L2_use_DP1,
-                        btnCross_L1_L2_DP1_open_start_delay,
-                        btnCross_L1_L2_DP1_stay_open_time,
-                        btnCross_L1_L2_use_DP2,
-                        btnCross_L1_L2_DP2_open_start_delay,
-                        btnCross_L1_L2_DP2_stay_open_time,
-                        btnCross_L1_L2_use_DP3,
-                        btnCross_L1_L2_DP3_open_start_delay,
-                        btnCross_L1_L2_DP3_stay_open_time,
-                        btnCross_L1_L2_use_DP4,
-                        btnCross_L1_L2_DP4_open_start_delay,
-                        btnCross_L1_L2_DP4_stay_open_time,
-                        btnCross_L1_L2_use_DP5,
-                        btnCross_L1_L2_DP5_open_start_delay,
-                        btnCross_L1_L2_DP5_stay_open_time,
-                        btnCross_L1_L2_use_DP6,
-                        btnCross_L1_L2_DP6_open_start_delay,
-                        btnCross_L1_L2_DP6_stay_open_time,
-                        btnCross_L1_L2_use_DP7,
-                        btnCross_L1_L2_DP7_open_start_delay,
-                        btnCross_L1_L2_DP7_stay_open_time,
-                        btnCross_L1_L2_use_DP8,
-                        btnCross_L1_L2_DP8_open_start_delay,
-                        btnCross_L1_L2_DP8_stay_open_time,
-                        btnCross_L1_L2_use_DP9,
-                        btnCross_L1_L2_DP9_open_start_delay,
-                        btnCross_L1_L2_DP9_stay_open_time,
-                        btnCross_L1_L2_use_DP10,
-                        btnCross_L1_L2_DP10_open_start_delay,
-                        btnCross_L1_L2_DP10_stay_open_time);
+    if (isAutomateDomeOn)
+    {
+      #ifdef SHADOW_DEBUG
+        output += "Disabling the Dome Automation\r\n";
+      #endif
+      isAutomateDomeOn = false;
+      domeStatus = 0;
+      domeTargetPosition = 0;
+      SyR->stop();
+      action = 0;
+      Serial1.print("$93\r");
+    }
+    else
+    {
+      #ifdef SHADOW_DEBUG
+        output += "Enabling the Dome Automation\r\n";
+      #endif
+      isAutomateDomeOn = true;
+      Serial1.print("$92\r");
+    }
+//    marcDuinoButtonPush(btnCross_L1_L2_type, btnCross_L1_L2_MD_func, btnCross_L1_L2_cust_MP3_num, btnCross_L1_L2_cust_LD_type, btnCross_L1_L2_cust_LD_text, btnCross_L1_L2_cust_panel,
+//                        btnCross_L1_L2_use_DP1,
+//                        btnCross_L1_L2_DP1_open_start_delay,
+//                        btnCross_L1_L2_DP1_stay_open_time,
+//                        btnCross_L1_L2_use_DP2,
+//                        btnCross_L1_L2_DP2_open_start_delay,
+//                        btnCross_L1_L2_DP2_stay_open_time,
+//                        btnCross_L1_L2_use_DP3,
+//                        btnCross_L1_L2_DP3_open_start_delay,
+//                        btnCross_L1_L2_DP3_stay_open_time,
+//                        btnCross_L1_L2_use_DP4,
+//                        btnCross_L1_L2_DP4_open_start_delay,
+//                        btnCross_L1_L2_DP4_stay_open_time,
+//                        btnCross_L1_L2_use_DP5,
+//                        btnCross_L1_L2_DP5_open_start_delay,
+//                        btnCross_L1_L2_DP5_stay_open_time,
+//                        btnCross_L1_L2_use_DP6,
+//                        btnCross_L1_L2_DP6_open_start_delay,
+//                        btnCross_L1_L2_DP6_stay_open_time,
+//                        btnCross_L1_L2_use_DP7,
+//                        btnCross_L1_L2_DP7_open_start_delay,
+//                        btnCross_L1_L2_DP7_stay_open_time,
+//                        btnCross_L1_L2_use_DP8,
+//                        btnCross_L1_L2_DP8_open_start_delay,
+//                        btnCross_L1_L2_DP8_stay_open_time,
+//                        btnCross_L1_L2_use_DP9,
+//                        btnCross_L1_L2_DP9_open_start_delay,
+//                        btnCross_L1_L2_DP9_stay_open_time,
+//                        btnCross_L1_L2_use_DP10,
+//                        btnCross_L1_L2_DP10_open_start_delay,
+//                        btnCross_L1_L2_DP10_stay_open_time);
   }
 
   if ((myPS3->getButtonPress(L2) && myPS3->getButtonPress(L1)) && myPS3->getButtonClick(CIRCLE))
@@ -4003,21 +4023,21 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
         case 1:
           // Play Random sound from Generic sound bank (bank #1)
           strMDCmd = "$1";
-          strMDCmd += String(random(1, 21));
+          strMDCmd += String(random(1, 26));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
         case 2:
           // Play Random sound from Chatty sound bank (bank #2)
           strMDCmd = "$2";
-          strMDCmd += String(random(1, 20));
+          strMDCmd += String(random(1, 26));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
         case 3:
           // Play Random sound from Happy sound bank (bank #1)
           strMDCmd = "$3";
-          strMDCmd += String(random(1, 8));
+          strMDCmd += String(random(1, 26));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
