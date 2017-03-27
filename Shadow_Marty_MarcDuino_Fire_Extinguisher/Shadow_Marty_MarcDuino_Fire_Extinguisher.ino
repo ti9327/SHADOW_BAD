@@ -3252,22 +3252,22 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
     {
       int joystickPosition = myPS3->getAnalogHat(LeftHatY);
       isFootMotorStopped = false;
-//      if ((myPS3->getButtonPress(L2)) && (!myPS3->getButtonPress(L1)))
-//      {
-//        int throttle = 0;
-//        if (joystickPosition < 127)
-//        {
-//          throttle = joystickPosition - myPS3->getAnalogButton(L2);
-//        } else
-//        {
-//          throttle = joystickPosition + myPS3->getAnalogButton(L2);
-//        }
-//
-//        stickSpeed = (map(throttle, -255, 510, -drivespeed2, drivespeed2));
-//      } else
-//      {
+      if ((myPS3->getButtonPress(L2)) && (!myPS3->getButtonPress(L1)))
+      {
+        int throttle = 0;
+        if (joystickPosition < 127)
+        {
+          throttle = joystickPosition - myPS3->getAnalogButton(L2);
+        } else
+        {
+          throttle = joystickPosition + myPS3->getAnalogButton(L2);
+        }
+
+        stickSpeed = (map(throttle, -255, 510, -drivespeed2, drivespeed2));
+      } else
+      {
         stickSpeed = (map(joystickPosition, 0, 255, -drivespeed1, drivespeed1));
-//      }
+      }
 
       if ( abs(joystickPosition - 128) < joystickFootDeadZoneRange)
       {
