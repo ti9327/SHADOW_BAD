@@ -58,13 +58,13 @@
 String PS3MoveNavigatonPrimaryMAC = "00:07:04:0A:B4:3F"; //If using multiple controlers, designate a primary
 
 
-byte drivespeed1 = 127;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
-//byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
+byte drivespeed1 = 100;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
+byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
 
-byte turnspeed = 75; //50;     // the higher this number the faster it will spin in place, lower - easier to control.
+byte turnspeed = 100; //50;     // the higher this number the faster it will spin in place, lower - easier to control.
 // Recommend beginner: 40 to 50, experienced: 50 $ up, I like 75
 
-byte domespeed = 127;    // If using a speed controller for the dome, sets the top speed
+byte domespeed = 75;    // If using a speed controller for the dome, sets the top speed
 // Use a number up to 127 for serial
 
 byte ramping = 3; //3;   // Ramping - the lower this number the longer R2 will take to speedup or slow down,
@@ -79,8 +79,8 @@ byte driveDeadBandRange = 10;     // Used to set the Sabertooth DeadZone for foo
 
 int invertTurnDirection = -1;   //This may need to be set to 1 for some configurations
 
-byte domeAutoSpeed = 127;     // Speed used when dome automation is active (1- 127)
-int time360DomeTurn = 2500;  // milliseconds for dome to complete 360 turn at domeAutoSpeed
+byte domeAutoSpeed = 60;     // Speed used when dome automation is active (1- 127)
+int time360DomeTurn = 1250;  // milliseconds for dome to complete 360 turn at domeAutoSpeed
 
 //#define TEST_CONROLLER   //Support coming soon
 #define SHADOW_DEBUG       //uncomment this for console DEBUG output
@@ -413,7 +413,7 @@ int btnDown_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnDown_MD_func = 11;
+int btnDown_MD_func = 7;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -477,16 +477,16 @@ int btnDown_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow UP + L2
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnUP_L2_type = 1;
+int btnUP_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnUP_L2_MD_func = 58;
+int btnUP_L2_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnUP_L2_cust_MP3_num = 0;
+int btnUP_L2_cust_MP3_num = 205;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -681,16 +681,16 @@ int btnRight_L2_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow Down + L2
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnDown_L2_type = 1;
+int btnDown_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnDown_L2_MD_func = 7;
+int btnDown_L2_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnDown_L2_cust_MP3_num = 178;
+int btnDown_L2_cust_MP3_num = 102;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1302,7 +1302,7 @@ int btnUP_L1_MD_func = 10;
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnUP_L1_cust_MP3_num = 183;
+int btnUP_L1_cust_MP3_num = 0;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1909,12 +1909,12 @@ int btnDown_L1_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnDown_L1_L2_MD_func = 8;
+int btnDown_L1_L2_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnDown_L1_L2_cust_MP3_num = 189;
+int btnDown_L1_L2_cust_MP3_num = 204;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -1977,12 +1977,12 @@ int btnLeft_L1_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnLeft_L1_L2_MD_func = 8;
+int btnLeft_L1_L2_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnLeft_L1_L2_cust_MP3_num = 185;
+int btnLeft_L1_L2_cust_MP3_num = 6;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -2689,8 +2689,8 @@ void setup()
   closeUtilArm(UTIL_ARM_TOP);
   closeUtilArm(UTIL_ARM_BOTTOM);
 
-  // Set volume on MP3 Trigger to Max
-  Serial1.print("$f\r");
+  // Set volume on MP3 Trigger to Mid
+  Serial1.print("$m\r");
   
   //Setup for Coin Slot LEDs
   for (int i = 0; i < numberOfCoinSlotLEDs; i++)
@@ -3167,22 +3167,22 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
     {
       int joystickPosition = myPS3->getAnalogHat(LeftHatY);
       isFootMotorStopped = false;
-//      if ((myPS3->getButtonPress(L2)) && (!myPS3->getButtonPress(L1)))
-//      {
-//        int throttle = 0;
-//        if (joystickPosition < 127)
-//        {
-//          throttle = joystickPosition - myPS3->getAnalogButton(L2);
-//        } else
-//        {
-//          throttle = joystickPosition + myPS3->getAnalogButton(L2);
-//        }
-//
-//        stickSpeed = (map(throttle, -255, 510, -drivespeed2, drivespeed2));
-//      } else
-//      {
+      if ((myPS3->getButtonPress(L2)) && (!myPS3->getButtonPress(L1)))
+      {
+        int throttle = 0;
+        if (joystickPosition < 127)
+        {
+          throttle = joystickPosition - myPS3->getAnalogButton(L2);
+        } else
+        {
+          throttle = joystickPosition + myPS3->getAnalogButton(L2);
+        }
+
+        stickSpeed = (map(throttle, -255, 510, -drivespeed2, drivespeed2));
+      } else
+      {
         stickSpeed = (map(joystickPosition, 0, 255, -drivespeed1, drivespeed1));
-//      }
+      }
 
       if ( abs(joystickPosition - 128) < joystickFootDeadZoneRange)
       {
@@ -3950,21 +3950,21 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
         case 1:
           // Play Random sound from Generic sound bank (bank #1)
           strMDCmd = "$1";
-          strMDCmd += String(random(1, 21));
+          strMDCmd += String(random(1, 26));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
         case 2:
           // Play Random sound from Chatty sound bank (bank #2)
           strMDCmd = "$2";
-          strMDCmd += String(random(1, 20));
+          strMDCmd += String(random(1, 26));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
         case 3:
           // Play Random sound from Happy sound bank (bank #1)
           strMDCmd = "$3";
-          strMDCmd += String(random(1, 8));
+          strMDCmd += String(random(1, 26));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
@@ -3978,14 +3978,14 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
         case 5:
           // Play Random sound from Sound bank (bank #9)
           strMDCmd = "$9";
-          strMDCmd += String(random(4, 18));
+          strMDCmd += String(random(6, 18));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
         case 6:
           // Play Random Blaster sound from Sound bank (bank #9)
           strMDCmd = "$9";
-          strMDCmd += String(random(20, 26));
+          strMDCmd += String(random(19, 26));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
