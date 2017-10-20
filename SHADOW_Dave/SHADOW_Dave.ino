@@ -58,8 +58,8 @@
 String PS3MoveNavigatonPrimaryMAC = "00:06:F7:C3:E3:9C"; //If using multiple controlers, designate a primary
 
 
-byte drivespeed1 = 127;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
-//byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
+byte drivespeed1 = 70;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
+byte drivespeed2 = 127;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
 
 byte turnspeed = 75; //50;     // the higher this number the faster it will spin in place, lower - easier to control.
                                // Recommend beginner: 40 to 50, experienced: 50 $ up, I like 75
@@ -711,21 +711,21 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
       {
           int joystickPosition = myPS3->getAnalogHat(LeftHatY);
           isFootMotorStopped = false;
-//          if (myPS3->getButtonPress(L2))
-//          {
-//            int throttle = 0;
-//            if (joystickPosition < 127)
-//            {
-//                throttle = joystickPosition - myPS3->getAnalogButton(L2);
-//            } else
-//            {
-//                throttle = joystickPosition + myPS3->getAnalogButton(L2);
-//            }
-//            stickSpeed = (map(throttle, -255, 510, -drivespeed2, drivespeed2));                
-//          } else 
-//          {
+          if (myPS3->getButtonPress(L2))
+          {
+            int throttle = 0;
+            if (joystickPosition < 127)
+            {
+                throttle = joystickPosition - myPS3->getAnalogButton(L2);
+            } else
+            {
+                throttle = joystickPosition + myPS3->getAnalogButton(L2);
+            }
+            stickSpeed = (map(throttle, -255, 510, -drivespeed2, drivespeed2));                
+          } else 
+          {
             stickSpeed = (map(joystickPosition, 0, 255, -drivespeed1, drivespeed1));
-//          }          
+          }          
 
             if ( abs(joystickPosition-128) < joystickFootDeadZoneRange)
           {
@@ -824,23 +824,23 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
               }
           }
 
-//          if ( abs(joystickPosition-128) < joystickFootDeadZoneRange)
-//          {
-//              footDriveSpeed = 0;
-//          } else if (footDriveSpeed < stickSpeed)
-//          {
-//              if ((stickSpeed-footDriveSpeed)>(ramping+1))
-//                  footDriveSpeed+=ramping;
-//              else
-//                  footDriveSpeed = stickSpeed;
-//          }
-//          else if (footDriveSpeed > stickSpeed)
-//          {
-//              if ((footDriveSpeed-stickSpeed)>(ramping+1))
-//                  footDriveSpeed-=ramping;
-//              else
-//                  footDriveSpeed = stickSpeed;  
-//          }
+          if ( abs(joystickPosition-128) < joystickFootDeadZoneRange)
+          {
+              footDriveSpeed = 0;
+          } else if (footDriveSpeed < stickSpeed)
+          {
+              if ((stickSpeed-footDriveSpeed)>(ramping+1))
+                  footDriveSpeed+=ramping;
+              else
+                  footDriveSpeed = stickSpeed;
+          }
+          else if (footDriveSpeed > stickSpeed)
+          {
+              if ((footDriveSpeed-stickSpeed)>(ramping+1))
+                  footDriveSpeed-=ramping;
+              else
+                  footDriveSpeed = stickSpeed;  
+          }
           
           turnnum = (myPS3->getAnalogHat(LeftHatX));
 
