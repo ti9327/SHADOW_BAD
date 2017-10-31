@@ -3444,9 +3444,9 @@ void ps3ToggleSettings(PS3BT* myPS3 = PS3Nav)
   {
     if (isAutomateDomeOn)
     {
-      #ifdef SHADOW_DEBUG
-        output += "Disabling the Dome Automation\r\n";
-      #endif
+#ifdef SHADOW_DEBUG
+      output += "Disabling the Dome Automation\r\n";
+#endif
       isAutomateDomeOn = false;
       domeStatus = 0;
       domeTargetPosition = 0;
@@ -3456,9 +3456,9 @@ void ps3ToggleSettings(PS3BT* myPS3 = PS3Nav)
     }
     else
     {
-      #ifdef SHADOW_DEBUG
-        output += "Enabling the Dome Automation\r\n";
-      #endif
+#ifdef SHADOW_DEBUG
+      output += "Enabling the Dome Automation\r\n";
+#endif
       isAutomateDomeOn = true;
       Serial1.print("$92\r");
     }
@@ -3978,7 +3978,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
         case 5:
           // Play Random sound from Sound bank (bank #9)
           strMDCmd = "$9";
-          strMDCmd += String(random(5, 18));
+          strMDCmd += String(random(4, 18));
           strMDCmd += "\r";
           Serial1.print(strMDCmd);
           break;
