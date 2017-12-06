@@ -3129,9 +3129,9 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
         isFootMotorStopped = true;
         footDriveSpeed = 0;
 
-#ifdef SHADOW_VERBOSE
+      #ifdef SHADOW_VERBOSE
         output += "\r\n***Foot Motor STOPPED***\r\n";
-#endif
+      #endif
       }
 
       return false;
@@ -3143,9 +3143,9 @@ boolean ps3FootMotorDrive(PS3BT* myPS3 = PS3Nav)
         isFootMotorStopped = true;
         footDriveSpeed = 0;
 
-#ifdef SHADOW_VERBOSE
+      #ifdef SHADOW_VERBOSE
         output += "\r\n***Foot Motor STOPPED***\r\n";
-#endif
+      #endif
       }
 
       return false;
