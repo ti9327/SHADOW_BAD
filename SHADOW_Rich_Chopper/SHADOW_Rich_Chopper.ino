@@ -107,21 +107,27 @@ int motorControllerBaudRate = 9600; // Set the baud rate for the Syren motor con
 
 //Utility Arm Contribution by Dave C.
 //TODO:  Move PINS to upper part of Mega for Shield purposes
-const int UTILITY_ARM_TOP_PIN   = 9;
-const int UTILITY_ARM_BOTTOM_PIN  = 10;
+const int UTILITY_ARM_BODY_TOP_PIN   = 9;
+const int UTILITY_ARM_BODY_BOTTOM_PIN  = 10;
+const int UTILITY_ARM_HEAD_LEFT_PIN   = 11;
+const int UTILITY_ARM_HEAD_RIGHT_PIN  = 12;
 
 int utilArmClosedPos = 0;    // variable to store the servo closed position 
 int utilArmOpenPos = 140;    // variable to store the servo Opened position 
 
 // Check value, open = true, closed = false
-boolean isUtilArmTopOpen = false;    
-boolean isUtilArmBottomOpen = false;
+boolean isUtilArmBodyTopOpen = false;    
+boolean isUtilArmBodyBottomOpen = false;
+boolean isUtilArmHeadLeftOpen = false;    
+boolean isUtilArmHeadRightOpen = false;
 
 int UtilArmBottomPos = 0;
 int UtilArmTopPos = 0;
 
-const int UTIL_ARM_TOP = 1;
-const int UTIL_ARM_BOTTOM = 2;
+const int UTIL_ARM_BODY_TOP = 1;
+const int UTIL_ARM_BODY_BOTTOM = 2;
+const int UTIL_ARM_HEAD_LEFT = 3;
+const int UTIL_ARM_HEAD_RIGHT = 4;
 
 // ---------------------------------------------------------------------------------------
 //                          Libraries
@@ -195,8 +201,10 @@ int domeStatus = 0;  // 0 = stopped, 1 = prepare to turn, 2 = turning
 byte action = 0;
 unsigned long DriveMillis = 0;
 
-Servo UtilArmTopServo;  // create servo object to control a servo 
-Servo UtilArmBottomServo;  // create servo object to control a servo
+Servo UtilArmBodyTopServo;  // create servo object to control a servo 
+Servo UtilArmBodyBottomServo;  // create servo object to control a servo
+Servo UtilArmHeadLeftServo;  // create servo object to control a servo 
+Servo UtilArmHeadRightServo;  // create servo object to control a servo
 
 // =======================================================================================
 //                          Main Program
@@ -248,11 +256,16 @@ void setup()
     //       the autobaud line and save yourself two seconds of startup delay.
 
     //Setup for Utility Arm Servo's    
-    UtilArmTopServo.attach(UTILITY_ARM_TOP_PIN);  
-    UtilArmBottomServo.attach(UTILITY_ARM_BOTTOM_PIN);
-    closeUtilArm(UTIL_ARM_TOP);
-    closeUtilArm(UTIL_ARM_BOTTOM);
-
+    UtilArmBodyTopServo.attach(UTILITY_ARM_BODY_TOP_PIN);  
+    UtilArmBodyBottomServo.attach(UTILITY_ARM_BODY_BOTTOM_PIN);
+    UtilArmHeadLeftServo.attach(UTILITY_ARM_HEAD_LEFT_PIN);  
+    UtilArmHeadRightServo.attach(UTILITY_ARM_HEAD_RIGHT_PIN);
+    
+    closeUtilArm(UTIL_ARM_BODY_TOP);
+    closeUtilArm(UTIL_ARM_BODY_BOTTOM);
+    closeUtilArm(UTIL_ARM_HEAD_LEFT);
+    closeUtilArm(UTIL_ARM_HEAD_RIGHT);
+    
 //    #ifdef SHADOW_DEBUG
 //      output += "\r\nCurrent Volume setting: ";
 //      output += vol;
@@ -934,10 +947,37 @@ void ps3utilityArms(PS3BT* myPS3 = PS3Nav, int controllerNumber = 1)
     if(myPS3->getButtonClick(UP))
     {
         #ifdef SHADOW_DEBUG
-          output += "Opening/Closing Body utility arm\r\n";
+          output += "Opening/Closing Upper Body utility arm\r\n";
         #endif
           
-          waveUtilArm(UTIL_ARM_TOP);
+          waveUtilArm(UTIL_ARM_BODY_TOP);
+    }
+
+    if(myPS3->getButtonClick(DOWN))
+    {
+        #ifdef SHADOW_DEBUG
+          output += "Opening/Closing Lower Body utility arm\r\n";
+        #endif
+          
+          waveUtilArm(UTIL_ARM_BODY_BOTTOM);
+    }
+
+    if(myPS3->getButtonClick(LEFT))
+    {
+        #ifdef SHADOW_DEBUG
+          output += "Opening/Closing Left Head utility arm\r\n";
+        #endif
+          
+          waveUtilArm(UTIL_ARM_HEAD_LEFT);
+    }
+
+    if(myPS3->getButtonClick(RIGHT))
+    {
+        #ifdef SHADOW_DEBUG
+          output += "Opening/Closing Right Head utility arm\r\n";
+        #endif
+          
+          waveUtilArm(UTIL_ARM_HEAD_RIGHT);
     }
   }
 }
@@ -1011,237 +1051,6 @@ void ps3ToggleSettings(PS3BT* myPS3 = PS3Nav)
 	}
 }
 
-void processSoundCommand(char soundCommand)
-{
-    switch (soundCommand) 
-    {
-        case '+':
-            #ifdef SHADOW_DEBUG    
-              output += "Volume Up\r\n";
-            #endif
-            if (vol>0)
-            {
-                vol-=10;
-                trigger.setVolume(vol);
-            }
-        break;
-        case '-':   
-            #ifdef SHADOW_DEBUG 
-              output += "Volume Down\r\n";
-            #endif
-            if (vol<255)
-            {
-                vol+=10;
-                trigger.setVolume(vol);
-            }
-        break;
-        
-        case '1':  
-          #ifdef SHADOW_DEBUG    
-            output += "Sound Button ";
-            output += soundCommand;
-            output += " - Play Random Sentence\r\n";
-          #endif
-          //Play Random Sentence
-          trigger.play(random(32,52));  
-          break;
-        case '2':   
-          #ifdef SHADOW_DEBUG    
-            output += "Sound Button ";
-            output += soundCommand;
-            output += " - Play Annoyed.\r\n";
-          #endif        
-          // Play Play Annoyed
-          trigger.play(8);
-          break;
-        case '3':    
-          #ifdef SHADOW_DEBUG    
-            output += "Sound Button ";
-            output += soundCommand;
-            output += " - Play Doo Doo\r\n";
-          #endif        
-          //Play Doo Doo
-          trigger.play(3);
-          break;
-        case '4':    
-          #ifdef SHADOW_DEBUG    
-            output += "Sound Button ";
-            output += soundCommand;
-            output += " - Play Chortle\r\n";
-          #endif        
-          //Play Chortle
-          trigger.play(2);
-          break;
-        case '5':    
-          #ifdef SHADOW_DEBUG    
-            output += "Sound Button ";
-            output += soundCommand;
-            output += " - Play Random Misc.\r\n";
-          #endif        
-          // Play Random Misc
-          trigger.play(random(17,25));
-          break;
-        case '6':    
-          #ifdef SHADOW_DEBUG    
-            output += "Sound Button ";
-            output += soundCommand;
-            output += " - Play Random OOH.\r\n";
-          #endif   
-          //Play Random OOH.     
-          trigger.play(random(25,32));
-          break;
-        case '7':    
-          #ifdef SHADOW_DEBUG    
-            output += "Sound Button ";
-            output += soundCommand;
-            output += " - Play Cantina Song.\r\n";
-          #endif        
-          //Play Cantina Song
-          trigger.play(10);
-          break;
-        case '8':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Imperial March.\r\n";
-            #endif
-            //Play Imperial March
-            trigger.play(11);
-        break;
-        case '9':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Let It Go.\r\n";
-            #endif
-            //Play Let It Go
-            trigger.play(55);
-        break;
-        case '0':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Gangdum Style\r\n";
-            #endif
-            //Play Gangdum Style
-            trigger.play(54);
-        break;
-        case 'A':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Happy\r\n";
-            #endif
-            //Play Happy
-            trigger.play(57);
-        break;
-        case 'B':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Summer\r\n";
-            #endif
-            //Play Summer
-            trigger.play(61);
-        break;
-        case 'C':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Everything is Awesome\r\n";
-            #endif
-            //Play Everything is Awesome
-            trigger.play(62);
-        break;
-        case 'D':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Up Town Funk\r\n";
-            #endif
-            //Play Up Town Funk
-            trigger.play(67);
-        break;
-        case 'E':    
-          #ifdef SHADOW_DEBUG    
-            output += "Sound Button ";
-            output += soundCommand;
-            output += " - Play Cantina Song.\r\n";
-          #endif        
-          //Play Cantina Song
-          trigger.play(10);
-          break;
-        case 'F':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Imperial March.\r\n";
-            #endif
-            //Play Imperial March
-            trigger.play(11);
-        break;
-        case 'G':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Let It Go.\r\n";
-            #endif
-            //Play Let It Go
-            trigger.play(55);
-        break;
-        case 'H':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Gangdum Style\r\n";
-            #endif
-            //Play Gangdum Style
-            trigger.play(54);
-        break;
-        case 'I':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Happy\r\n";
-            #endif
-            //Play Happy
-            trigger.play(57);
-        break;
-        case 'J':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Summer\r\n";
-            #endif
-            //Play Summer
-            trigger.play(61);
-        break;
-        case 'K':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Everything is Awesome\r\n";
-            #endif
-            //Play Everything is Awesome
-            trigger.play(62);
-        break;
-        case 'L':
-            #ifdef SHADOW_DEBUG    
-              output += "Sound Button ";
-              output += soundCommand;
-              output += " - Play Up Town Funk\r\n";
-            #endif
-            //Play Up Town Funk
-            trigger.play(67);
-        break;
-        default:
-            #ifdef SHADOW_DEBUG
-              output += "Invalid Sound Command\r\n";
-            #endif
-            trigger.play(60);
-  }
-}
-
 void footMotorDrive()
 {
   //Flood control prevention
@@ -1302,18 +1111,32 @@ void waveUtilArm(int arm)
 {
     switch (arm)
     {
-      case UTIL_ARM_TOP:
-        if(isUtilArmTopOpen == false){
-          openUtilArm(UTIL_ARM_TOP);
+      case UTIL_ARM_BODY_TOP:
+        if(isUtilArmBodyTopOpen == false){
+          openUtilArm(UTIL_ARM_BODY_TOP);
         } else {
-          closeUtilArm(UTIL_ARM_TOP);
+          closeUtilArm(UTIL_ARM_BODY_TOP);
         }
         break;
-      case UTIL_ARM_BOTTOM:  
-        if(isUtilArmBottomOpen == false){
-          openUtilArm(UTIL_ARM_BOTTOM);
+      case UTIL_ARM_BODY_BOTTOM:  
+        if(isUtilArmBodyBottomOpen == false){
+          openUtilArm(UTIL_ARM_BODY_BOTTOM);
         } else {
-          closeUtilArm(UTIL_ARM_BOTTOM);
+          closeUtilArm(UTIL_ARM_BODY_BOTTOM);
+        }
+        break;
+      case UTIL_ARM_HEAD_LEFT:  
+        if(isUtilArmHeadLeftOpen == false){
+          openUtilArm(UTIL_ARM_HEAD_LEFT);
+        } else {
+          closeUtilArm(UTIL_ARM_HEAD_LEFT);
+        }
+        break;
+      case UTIL_ARM_HEAD_RIGHT:  
+        if(isUtilArmHeadRightOpen == false){
+          openUtilArm(UTIL_ARM_HEAD_RIGHT);
+        } else {
+          closeUtilArm(UTIL_ARM_HEAD_RIGHT);
         }
         break;
     }
@@ -1323,24 +1146,44 @@ void moveUtilArm(int arm, int position)
 {
     switch (arm)
     {
-      case UTIL_ARM_TOP:
-        UtilArmTopServo.write(position);
+      case UTIL_ARM_BODY_TOP:
+        UtilArmBodyTopServo.write(position);
         if ( position == utilArmClosedPos)
         {
-          isUtilArmTopOpen = false;
+          isUtilArmBodyTopOpen = false;
         } else
         {
-          isUtilArmTopOpen = true;
+          isUtilArmBodyTopOpen = true;
         }
         break;
-      case UTIL_ARM_BOTTOM:  
-        UtilArmBottomServo.write(position);
+      case UTIL_ARM_BODY_BOTTOM:  
+        UtilArmBodyBottomServo.write(position);
         if ( position == utilArmClosedPos)
         {
-          isUtilArmBottomOpen = false;
+          isUtilArmBodyBottomOpen = false;
         } else
         {
-          isUtilArmBottomOpen = true;
+          isUtilArmBodyBottomOpen = true;
+        }
+        break;
+      case UTIL_ARM_HEAD_LEFT:
+        UtilArmHeadLeftServo.write(position);
+        if ( position == utilArmClosedPos)
+        {
+          isUtilArmHeadLeftOpen = false;
+        } else
+        {
+          isUtilArmHeadLeftOpen = true;
+        }
+        break;
+      case UTIL_ARM_HEAD_RIGHT:  
+        UtilArmHeadRightServo.write(position);
+        if ( position == utilArmClosedPos)
+        {
+          isUtilArmHeadRightOpen = false;
+        } else
+        {
+          isUtilArmHeadRightOpen = true;
         }
         break;
     }

@@ -110,8 +110,11 @@ int motorControllerBaudRate = 9600; // Set the baud rate for the Syren motor con
 const int UTILITY_ARM_TOP_PIN   = 9;
 const int UTILITY_ARM_BOTTOM_PIN  = 10;
 
-int utilArmClosedPos = 0;    // variable to store the servo closed position 
-int utilArmOpenPos = 140;    // variable to store the servo Opened position 
+int utilArmTopClosedPos = 0;    // variable to store the servo closed position 
+int utilArmTopOpenPos = 90;    // variable to store the servo Opened position 
+
+int utilArmBottomClosedPos = 90;    // variable to store the servo closed position
+int utilArmBottomOpenPos = 0;    // variable to store the servo Opened position
 
 // Check value, open = true, closed = false
 boolean isUtilArmTopOpen = false;    
@@ -1391,16 +1394,32 @@ void soundControl()
 }  
 
 
-void openUtilArm(int arm, int position = utilArmOpenPos)
+void openUtilArm(int arm)
 {
-    //When passed a position - this can "partially" open the arms.
-    //Great for more interaction
-    moveUtilArm(arm, utilArmOpenPos);
+  //When passed a position - this can "partially" open the arms.
+  //Great for more interaction
+  switch (arm)
+  {
+    case UTIL_ARM_TOP:
+      moveUtilArm(arm, utilArmTopOpenPos);
+      break;
+    case UTIL_ARM_BOTTOM:
+      moveUtilArm(arm, utilArmBottomOpenPos);
+      break;
+  }
 }
 
 void closeUtilArm(int arm)
 {
-    moveUtilArm(arm, utilArmClosedPos);
+  switch (arm)
+  {
+    case UTIL_ARM_TOP:
+      moveUtilArm(arm, utilArmTopClosedPos);
+      break;
+    case UTIL_ARM_BOTTOM:
+      moveUtilArm(arm, utilArmBottomClosedPos);
+      break;
+  } 
 }
 
 void waveUtilArm(int arm)
@@ -1430,7 +1449,7 @@ void moveUtilArm(int arm, int position)
     {
       case UTIL_ARM_TOP:
         UtilArmTopServo.write(position);
-        if ( position == utilArmClosedPos)
+        if ( position == utilArmTopClosedPos)
         {
           isUtilArmTopOpen = false;
         } else
@@ -1440,7 +1459,7 @@ void moveUtilArm(int arm, int position)
         break;
       case UTIL_ARM_BOTTOM:  
         UtilArmBottomServo.write(position);
-        if ( position == utilArmClosedPos)
+        if ( position == utilArmBottomClosedPos)
         {
           isUtilArmBottomOpen = false;
         } else
