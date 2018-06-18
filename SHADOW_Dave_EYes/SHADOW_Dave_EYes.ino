@@ -126,6 +126,11 @@ int UtilArmTopPos = 0;
 const int UTIL_ARM_TOP = 1;
 const int UTIL_ARM_BOTTOM = 2;
 
+//---------------------------------------------------------------------------------------
+//                           Dome Eye Settings
+//---------------------------------------------------------------------------------------
+const int DOME_EYE_PIN = 11;
+
 // ---------------------------------------------------------------------------------------
 //                          LED Settings
 // ---------------------------------------------------------------------------------------
@@ -166,6 +171,8 @@ long currentMillis = millis();
 int serialLatency = 25;   //This is a delay factor in ms to prevent queueing of the Serial data.
                           //25ms seems appropriate for HardwareSerial, values of 50ms or larger are needed for Softare Emulation
 
+long eyeMillis = millis();
+
 Sabertooth *ST=new Sabertooth(SABERTOOTH_ADDR, Serial2);
 Sabertooth *SyR=new Sabertooth(SYREN_ADDR, Serial2);
 
@@ -195,6 +202,7 @@ boolean isSecondaryPS3NavigatonInitialized = false;
 byte vol = 40; // 0 = full volume, 255 off
 boolean isStickEnabled = true;
 byte isAutomateDomeOn = false;
+byte isAutoEyesOn = true;
 unsigned long automateMillis = 0;
 //byte automateDelay = random(5,20);// set this to min and max seconds between sounds
 //int domeAutomationTurnDirection = 20;
@@ -213,6 +221,7 @@ unsigned long DriveMillis = 0;
 
 Servo UtilArmTopServo;  // create servo object to control a servo 
 Servo UtilArmBottomServo;  // create servo object to control a servo
+Servo DomeEyeServo;
 
 // =======================================================================================
 //                          Main Program
@@ -266,8 +275,13 @@ void setup()
     //Setup for Utility Arm Servo's    
     UtilArmTopServo.attach(UTILITY_ARM_TOP_PIN);  
     UtilArmBottomServo.attach(UTILITY_ARM_BOTTOM_PIN);
+        
     closeUtilArm(UTIL_ARM_TOP);
     closeUtilArm(UTIL_ARM_BOTTOM);
+    
+    //Setup for Dome Eye Servo
+    DomeEyeServo.attach(DOME_EYE_PIN);
+    DomeEyeServo.write(0);
     
     //Setup for Coin Slot LEDs    
     for(int i = 0; i<numberOfCoinSlotLEDs; i++)
@@ -311,7 +325,7 @@ void loop()
     #ifdef TEST_CONROLLER
       testPS3Controller();
     #endif
-   
+
     //LOOP through functions from highest to lowest priority.
 
     if ( !readUSB() )
@@ -327,6 +341,7 @@ void loop()
       return;
     }
     automateDome();
+    automateEyes();
     domeDrive();
 
     utilityArms();
@@ -905,7 +920,21 @@ int ps3DomeDrive(PS3BT* myPS3 = PS3Nav, int controllerNumber = 1)
         domeRotationSpeed = (map(joystickPosition, 0, 255, -domespeed, domespeed));
         if ( abs(joystickPosition-128) < joystickDomeDeadZoneRange ) 
           domeRotationSpeed = 0;
-          
+
+        int domeyePosition = myPS3->getAnalogHat(LeftHatY);
+        int dome_eye_position = (map(domeyePosition, 0, 255, 0, 180));
+
+        if (domeyePosition > 160 || domeyePosition < 90)
+        {
+          isAutoEyesOn = false;
+          DomeEyeServo.write(dome_eye_position);
+          //Serial.println(domeyePosition);
+        }
+        else
+        {
+          isAutoEyesOn = true;
+        }
+              
         if (domeRotationSpeed != 0 && isAutomateDomeOn == true)  // Turn off dome automation if manually moved
         {   
             isAutomateDomeOn = false; 
@@ -918,7 +947,23 @@ int ps3DomeDrive(PS3BT* myPS3 = PS3Nav, int controllerNumber = 1)
 
         }
     }
+    else
+    {
+      isAutoEyesOn = true;
+    }
     return domeRotationSpeed;
+}
+
+void automateEyes()
+{
+  if (isAutoEyesOn)
+  {
+    if (eyeMillis <= currentMillis)
+    {
+      eyeMillis = currentMillis + (random(2000,5000));
+      DomeEyeServo.write(random(0,180));
+    }
+  }
 }
 
 void rotateDome(int domeRotationSpeed, String mesg)
