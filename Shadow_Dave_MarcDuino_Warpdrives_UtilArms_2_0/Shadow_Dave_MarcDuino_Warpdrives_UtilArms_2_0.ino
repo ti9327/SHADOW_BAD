@@ -1,5 +1,5 @@
 // =======================================================================================
-//                 SHADOW :  Small Handheld Arduino Droid Operating Wand
+//        SHADOW_MD:  Small Handheld Arduino Droid Operating Wand + MarcDuino
 // =======================================================================================
 //                          Last Revised Date: 10/05/14
 //                             Written By: KnightShade
@@ -105,75 +105,82 @@ int time360DomeTurn = 1250;  // milliseconds for dome to complete 360 turn at do
 //    13 = Mid Awake mode reset (panel close, rnd sound, stop holos)
 //    14 = Full Awake+ reset (panel close, rnd sound, holo move, holo lights on)
 //    15 = Scream, with all panels open (NO SOUND)
-//    16 = Wave, one panel at a time (NO SOUND)
-//    17 = Fast (smirk) back and forth (NO SOUND)
-//    18 = Wave 2 (Open progressively, then close one by one) (NO SOUND)
-//    19 = Marching Ants (NO SOUND)
-//    20 = Faint/Short Circuit (NO SOUND)
-//    21 = Rhythmic cantina dance (NO SOUND)
-//    22 = Random Holo Movement On (All) - No other actions
-//    23 = Holo Lights On (All)
-//    24 = Holo Lights Off (All)
-//    25 = Holo reset (motion off, lights off)
-//    26 = Volume Up
-//    27 = Volume Down
-//    28 = Volume Max
-//    29 = Volume Mid
-//    30 = Open All Dome Panels
-//    31 = Open Top Dome Panels
-//    32 = Open Bottom Dome Panels
-//    33 = Close All Dome Panels
-//    34 = Open Dome Panel #1
-//    35 = Close Dome Panel #1
-//    36 = Open Dome Panel #2
-//    37 = Close Dome Panel #2
-//    38 = Open Dome Panel #3
-//    39 = Close Dome Panel #3
-//    40 = Open Dome Panel #4
-//    41 = Close Dome Panel #4
-//    42 = Open Dome Panel #5
-//    43 = Close Dome Panel #5
-//    44 = Open Dome Panel #6
-//    45 = Close Dome Panel #6
-//    46 = Open Dome Panel #7
-//    47 = Close Dome Panel #7
-//    48 = Open Dome Panel #8
-//    49 = Close Dome Panel #8
-//    50 = Open Dome Panel #9
-//    51 = Close Dome Panel #9
-//    52 = Open Dome Panel #10
-//    53 = Close Dome Panel #10
-//    54 = Scream (bank 6 sound 1)
-//    55 = Faint/short circuit (bank 6 sound 3)
-//    56 = Leia message (bank 7 sound 1)
-//    57 = Short Cantina music (bank 8 sound 1)
-//    58 = Star Wars (bank 8 sound 2)
-//    59 = Imperial March (bank 8 sound 3)
-//    60 = Long Cantina music (bank 8 sound 5)
-//    61 = Disco Star Wars music (bank 8 sound 6)
+//    16 = Panel Wiggle (aka Jazz "Hands")
+//    17 = Scream, with all panels open
+//    18 = Wave, one panel at a time (NO SOUND)
+//    19 = Fast (smirk) back and forth (NO SOUND)
+//    20 = Wave 2 (Open progressively, then close one by one) (NO SOUND)
+//    21 = Marching Ants (NO SOUND)
+//    22 = Faint/Short Circuit (NO SOUND)
+//    23 = Rhythmic cantina dance (NO SOUND)
+//    24 = Bye Bye Wave
+//    25 = Random Holo Movement On (All) - No other actions
+//    26 = Holo Lights On (All)
+//    27 = Holo Lights Off (All)
+//    28 = Holo reset (motion off, lights off)
+//    29 = Volume Up
+//    30 = Volume Down
+//    31 = Volume Max
+//    32 = Volume Mid
+//    33 = Open All Dome Panels
+//    34 = Open Top Dome Panels
+//    35 = Open Bottom Dome Panels
+//    36 = Close All Dome Panels
+//    37 = Open Dome Panel #1
+//    38 = Close Dome Panel #1
+//    39 = Open Dome Panel #2
+//    40 = Close Dome Panel #2
+//    41 = Open Dome Panel #3
+//    42 = Close Dome Panel #3
+//    43 = Open Dome Panel #4
+//    44 = Close Dome Panel #4
+//    45 = Open Dome Panel #5
+//    46 = Close Dome Panel #5
+//    47 = Open Dome Panel #6
+//    48 = Close Dome Panel #6
+//    49 = Open Dome Panel #7
+//    50 = Close Dome Panel #7
+//    51 = Open Dome Panel #8
+//    52 = Close Dome Panel #8
+//    53 = Open Dome Panel #9
+//    54 = Close Dome Panel #9
+//    55 = Open Dome Panel #10
+//    56 = Close Dome Panel #10
+//   *** MAGIC PANEL LIGHTING COMMANDS
+//    57 = Magic Panel ON
+//    58 = Magic Panel OFF
+//    59 = Magic Panel Flicker (10 seconds) 
+//    60 = Scream (bank 6 sound 1)
+//    61 = Faint/short circuit (bank 6 sound 3)
+//    62 = Leia message (bank 7 sound 1)
+//    63 = Short Cantina music (bank 8 sound 1)
+//    64 = Star Wars (bank 8 sound 2)
+//    65 = Imperial March (bank 8 sound 3)
+//    66 = Long Cantina music (bank 8 sound 5)
+//    67 = Disco Star Wars music (bank 8 sound 6)
 //   *** BODY PANEL OPTIONS ASSUME SECOND MARCDUINO MASTER BOARD ON MEGA ADK SERIAL #3 ***
-//    62 = Open All Body Panels
-//    63 = Close All Body Panels
-//    64 = Open Body Panel #1
-//    65 = Close Body Panel #1
-//    66 = Open Body Panel #2
-//    67 = Close Body Panel #2
-//    68 = Open Body Panel #3
-//    69 = Close Body Panel #3
-//    70 = Open Body Panel #4
-//    71 = Close Body Panel #4
-//    72 = Open Body Panel #5
-//    73 = Close Body Panel #5
-//    74 = Open Body Panel #6
-//    75 = Close Body Panel #6
-//    76 = Open Body Panel #7
-//    77 = Close Body Panel #7
-//    78 = Open Body Panel #8
-//    79 = Close Body Panel #8
-//    80 = Open Body Panel #9
-//    81 = Close Body Panel #9
-//    82 = Open Body Panel #10
-//    83 = Close Body Panel #10
+//    68 = Open All Body Panels
+//    69 = Close All Body Panels
+//    70 = Open Body Panel #1
+//    71 = Close Body Panel #1
+//    72 = Open Body Panel #2
+//    73 = Close Body Panel #2
+//    74 = Open Body Panel #3
+//    75 = Close Body Panel #3
+//    76 = Open Body Panel #4
+//    77 = Close Body Panel #4
+//    78 = Open Body Panel #5
+//    79 = Close Body Panel #5
+//    80 = Open Body Panel #6
+//    81 = Close Body Panel #6
+//    82 = Open Body Panel #7
+//    83 = Close Body Panel #7
+//    84 = Open Body Panel #8
+//    85 = Close Body Panel #8
+//    86 = Open Body Panel #9
+//    87 = Close Body Panel #9
+//    88 = Open Body Panel #10
+//    89 = Close Body Panel #10
 //
 // Std MarcDuino Logic Display Functions (For custom functions)
 //     1 = Display normal random sequence
@@ -277,7 +284,7 @@ int btnLeft_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnLeft_MD_func = 3;
+int btnLeft_MD_func = 16;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -1569,7 +1576,7 @@ int btnCross_L1_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnCross_L1_MD_func = 26;
+int btnCross_L1_MD_func = 29;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -1637,7 +1644,7 @@ int btnCircle_L1_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnCircle_L1_MD_func = 27;
+int btnCircle_L1_MD_func = 30;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -3672,279 +3679,303 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
         break;
 
       case 15:
-        Serial1.print(":SE51\r");
+        Serial1.print(":SE15\r");
         break;
 
       case 16:
-        Serial1.print(":SE52\r");
+        Serial1.print(":SE16\r");
         break;
-
+        
       case 17:
-        Serial1.print(":SE53\r");
+        Serial1.print(":SE51\r");
         break;
 
       case 18:
-        Serial1.print(":SE54\r");
+        Serial1.print(":SE52\r");
         break;
 
       case 19:
-        Serial1.print(":SE55\r");
+        Serial1.print(":SE53\r");
         break;
 
       case 20:
-        Serial1.print(":SE56\r");
+        Serial1.print(":SE54\r");
         break;
 
       case 21:
-        Serial1.print(":SE57\r");
+        Serial1.print(":SE55\r");
         break;
 
       case 22:
-        Serial1.print("*RD00\r");
+        Serial1.print(":SE56\r");
         break;
 
       case 23:
-        Serial1.print("*ON00\r");
+        Serial1.print(":SE57\r");
         break;
 
       case 24:
-        Serial1.print("*OF00\r");
+        Serial1.print(":SE58\r");
         break;
 
       case 25:
-        Serial1.print("*ST00\r");
+        Serial1.print("*RD00\r");
         break;
 
       case 26:
-        Serial1.print("$+\r");
+        Serial1.print("*ON00\r");
         break;
 
       case 27:
-        Serial1.print("$-\r");
+        Serial1.print("*OF00\r");
         break;
 
       case 28:
-        Serial1.print("$f\r");
+        Serial1.print("*ST00\r");
         break;
 
       case 29:
-        Serial1.print("$m\r");
+        Serial1.print("$+\r");
         break;
 
       case 30:
-        Serial1.print(":OP00\r");
+        Serial1.print("$-\r");
         break;
 
       case 31:
-        Serial1.print(":OP11\r");
+        Serial1.print("$f\r");
         break;
 
       case 32:
-        Serial1.print(":OP12\r");
+        Serial1.print("$m\r");
         break;
 
       case 33:
-        Serial1.print(":CL00\r");
+        Serial1.print(":OP00\r");
         break;
 
       case 34:
-        Serial1.print(":OP01\r");
+        Serial1.print(":OP11\r");
         break;
 
       case 35:
-        Serial1.print(":CL01\r");
+        Serial1.print(":OP12\r");
         break;
 
       case 36:
-        Serial1.print(":OP02\r");
+        Serial1.print(":CL00\r");
         break;
 
       case 37:
-        Serial1.print(":CL02\r");
+        Serial1.print(":OP01\r");
         break;
 
       case 38:
-        Serial1.print(":OP03\r");
+        Serial1.print(":CL01\r");
         break;
 
       case 39:
-        Serial1.print(":CL03\r");
+        Serial1.print(":OP02\r");
         break;
 
       case 40:
-        Serial1.print(":OP04\r");
+        Serial1.print(":CL02\r");
         break;
 
       case 41:
-        Serial1.print(":CL04\r");
+        Serial1.print(":OP03\r");
         break;
 
       case 42:
-        Serial1.print(":OP05\r");
+        Serial1.print(":CL03\r");
         break;
 
       case 43:
-        Serial1.print(":CL05\r");
+        Serial1.print(":OP04\r");
         break;
 
       case 44:
-        Serial1.print(":OP06\r");
+        Serial1.print(":CL04\r");
         break;
 
       case 45:
-        Serial1.print(":CL06\r");
+        Serial1.print(":OP05\r");
         break;
 
       case 46:
-        Serial1.print(":OP07\r");
+        Serial1.print(":CL05\r");
         break;
 
       case 47:
-        Serial1.print(":CL07\r");
+        Serial1.print(":OP06\r");
         break;
 
       case 48:
-        Serial1.print(":OP08\r");
+        Serial1.print(":CL06\r");
         break;
 
       case 49:
-        Serial1.print(":CL08\r");
+        Serial1.print(":OP07\r");
         break;
 
       case 50:
-        Serial1.print(":OP09\r");
+        Serial1.print(":CL07\r");
         break;
 
       case 51:
-        Serial1.print(":CL09\r");
+        Serial1.print(":OP08\r");
         break;
 
       case 52:
-        Serial1.print(":OP10\r");
+        Serial1.print(":CL08\r");
         break;
 
       case 53:
-        Serial1.print(":CL10\r");
+        Serial1.print(":OP09\r");
         break;
 
       case 54:
-        Serial1.print("$S\r");
+        Serial1.print(":CL09\r");
         break;
 
       case 55:
-        Serial1.print("$F\r");
+        Serial1.print(":OP10\r");
         break;
 
       case 56:
-        Serial1.print("$L\r");
+        Serial1.print(":CL10\r");
         break;
 
       case 57:
-        Serial1.print("$c\r");
+        Serial1.print("*MO99\r");
         break;
 
       case 58:
-        Serial1.print("$W\r");
+        Serial1.print("*MO00\r");
         break;
 
       case 59:
-        Serial1.print("$M\r");
+        Serial1.print("*MF10\r");
         break;
 
       case 60:
-        Serial1.print("$C\r");
+        Serial1.print("$S\r");
         break;
 
       case 61:
+        Serial1.print("$F\r");
+        break;
+
+      case 62:
+        Serial1.print("$L\r");
+        break;
+
+      case 63:
+        Serial1.print("$c\r");
+        break;
+
+      case 64:
+        Serial1.print("$W\r");
+        break;
+
+      case 65:
+        Serial1.print("$M\r");
+        break;
+
+      case 66:
+        Serial1.print("$C\r");
+        break;
+
+      case 67:
         Serial1.print("$D\r");
         break;
 
 #ifdef MD_BODY_CONNECTED
-      case 62:
+      case 68:
         Serial3.print(":OP00\r");
         break;
 
-      case 63:
+      case 69:
         Serial3.print(":CL00\r");
         break;
 
-      case 64:
+      case 70:
         Serial3.print(":OP01\r");
         break;
 
-      case 65:
+      case 71:
         Serial3.print(":CL01\r");
         break;
 
-      case 66:
+      case 72:
         Serial3.print(":OP02\r");
         break;
 
-      case 67:
+      case 73:
         Serial3.print(":CL02\r");
         break;
 
-      case 68:
+      case 74:
         Serial3.print(":OP03\r");
         break;
 
-      case 69:
+      case 75:
         Serial3.print(":CL03\r");
         break;
 
-      case 70:
+      case 76:
         Serial3.print(":OP04\r");
         break;
 
-      case 71:
+      case 77:
         Serial3.print(":CL04\r");
         break;
 
-      case 72:
+      case 78:
         Serial3.print(":OP05\r");
         break;
 
-      case 73:
+      case 79:
         Serial3.print(":CL05\r");
         break;
 
-      case 74:
+      case 80:
         Serial3.print(":OP06\r");
         break;
 
-      case 75:
+      case 81:
         Serial3.print(":CL06\r");
         break;
 
-      case 76:
+      case 82:
         Serial3.print(":OP07\r");
         break;
 
-      case 77:
+      case 83:
         Serial3.print(":CL07\r");
         break;
 
-      case 78:
+      case 84:
         Serial3.print(":OP08\r");
         break;
 
-      case 79:
+      case 85:
         Serial3.print(":CL08\r");
         break;
 
-      case 80:
+      case 86:
         Serial3.print(":OP09\r");
         break;
 
-      case 81:
+      case 87:
         Serial3.print(":CL09\r");
         break;
 
-      case 82:
+      case 88:
         Serial3.print(":OP10\r");
         break;
 
-      case 83:
+      case 89:
         Serial3.print(":CL10\r");
         break;
 #endif
@@ -5531,13 +5562,13 @@ void movePanels(int position)
       #ifdef SHADOW_DEBUG
           output += "Opening All Panels\r\n";
       #endif
-      btnCircle_L1_L2_MD_func = 30;
+      btnCircle_L1_L2_MD_func = 33;
       break;
     case PanelClosedPos:
       #ifdef SHADOW_DEBUG
           output += "Closing All Panels\r\n";
       #endif
-      btnCircle_L1_L2_MD_func = 33;
+      btnCircle_L1_L2_MD_func = 36;
       break;
   }
   
