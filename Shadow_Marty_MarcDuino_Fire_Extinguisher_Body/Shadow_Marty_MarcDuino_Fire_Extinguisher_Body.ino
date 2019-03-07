@@ -3677,6 +3677,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 3:
         Serial1.print(":SE02\r");
+        Serial3.print(":SE02\r");
         break;
 
       case 4:
@@ -3710,6 +3711,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 11:
         Serial1.print(":SE10\r");
+        Serial3.print(":SE10\r");
         break;
 
       case 12:
@@ -3786,6 +3788,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 30:
         Serial1.print(":OP00\r");
+        Serial3.print(":OP00\r");
         break;
 
       case 31:
@@ -3798,6 +3801,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 33:
         Serial1.print(":CL00\r");
+        Serial3.print(":CL00\r");
         break;
 
       case 34:
@@ -4307,6 +4311,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
         case 5:
           Serial1.print(":SE54\r");
+          Serial3.print(":SE54\r");
           break;
 
         case 6:
@@ -5510,11 +5515,11 @@ void moveUtilArm(int arm, int position)
     case UTIL_ARM_TOP:
       if (position == utilArmClosedPos)
       {
-        btnCross_MD_func = 71;
+        btnCross_MD_func = 73;
         isUtilArmTopOpen = false;
       } else
       {
-        btnCross_MD_func = 70;
+        btnCross_MD_func = 72;
         isUtilArmTopOpen = true;
       }
      marcDuinoButtonPush (btnCross_type, btnCross_MD_func, btnCross_cust_MP3_num, btnCross_cust_LD_type, btnCross_cust_LD_text, btnCross_cust_panel,
@@ -5552,11 +5557,11 @@ void moveUtilArm(int arm, int position)
     case UTIL_ARM_BOTTOM:
       if (position == utilArmClosedPos)
       {
-        btnCircle_MD_func = 69;
+        btnCircle_MD_func = 71;
         isUtilArmBottomOpen = false;
       } else
       {
-        btnCircle_MD_func = 68;
+        btnCircle_MD_func = 70;
         isUtilArmBottomOpen = true;
       }
       marcDuinoButtonPush(btnCircle_type, btnCircle_MD_func, btnCircle_cust_MP3_num, btnCircle_cust_LD_type, btnCircle_cust_LD_text, btnCircle_cust_panel,
