@@ -86,6 +86,8 @@ int time360DomeTurn = 1250;  // milliseconds for dome to complete 360 turn at do
 #define SHADOW_DEBUG       //uncomment this for console DEBUG output
 #define SHADOW_VERBOSE     //uncomment this for console VERBOSE output
 
+#define MD_BODY_CONNECTED
+
 // ---------------------------------------------------------------------------------------
 //                          MarcDuino Button Settings
 // ---------------------------------------------------------------------------------------
@@ -2495,6 +2497,16 @@ int coinSlotLedState[numberOfCoinSlotLEDs]; // Array indicating the state of the
 // ---------------------------------------------------------------------------------------
 
 //Utility Arm Contribution by Dave C.
+int utilArmClosedPos = 0;    // variable to store the servo closed position
+int utilArmOpenPos = 140;    // variable to store the servo Opened position
+
+// Check value, open = true, closed = false
+boolean isUtilArmTopOpen = false;
+boolean isUtilArmBottomOpen = false;
+
+const int UTIL_ARM_TOP = 1;
+const int UTIL_ARM_BOTTOM = 2;
+
 Servo FireExtinguisherServo; // create servo object to control a servo
 
 int fireExtinguisherClosedPos = 100;    // variable to store the servo closed position 
@@ -2667,10 +2679,10 @@ void setup()
   //Setup for Serial1:: MarcDuino Dome Control Board
   Serial1.begin(marcDuinoBaudRate);
 
-#ifdef MD_BODY_CONNECTED
+//#ifdef MD_BODY_CONNECTED
   //Setup for Serial3:: Optional MarcDuino Control Board for Body Panels
   Serial3.begin(marcDuinoBaudRate);
-#endif
+//#endif
 
   randomSeed(analogRead(0));  // random number seed for dome automation
 
@@ -2683,8 +2695,7 @@ void setup()
   //       the autobaud line and save yourself two seconds of startup delay.
 
   //Close all panels
-  Serial1.print(":SE00\r");
-  Serial3.print(":SE00\r");
+  closePanels();
 
   // Set volume on MP3 Trigger to Mid
   Serial1.print("$m\r");
@@ -3599,14 +3610,17 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
     {
       case 1:
         Serial1.print(":SE00\r");
+        Serial3.print(":SE00\r");
         break;
 
       case 2:
         Serial1.print(":SE01\r");
+        Serial3.print(":SE01\r");
         break;
 
       case 3:
         Serial1.print(":SE02\r");
+        Serial3.print(":SE02\r");
         break;
 
       case 4:
@@ -3628,6 +3642,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 8:
         Serial1.print(":SE07\r");
+        Serial3.print(":SE07\r");
         break;
 
       case 9:
@@ -3665,6 +3680,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
         
       case 16:
         Serial1.print("&25,\"A006|10\r:SE16\r");
+        Serial3.print(":SE16\r");
         break;
         
       case 17:
@@ -3733,6 +3749,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 33:
         Serial1.print(":OP00\r");
+        Serial3.print(":OP00\r");
         break;
 
       case 34:
@@ -3745,6 +3762,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 36:
         Serial1.print(":CL00\r");
+        Serial3.print(":CL00\r");
         break;
 
       case 37:
@@ -5434,28 +5452,12 @@ void openUtilArm(int arm)
 {
   //When passed a position - this can "partially" open the arms.
   //Great for more interaction
-  switch (arm)
-  {
-    case UTIL_ARM_TOP:
-      moveUtilArm(arm, utilArmTopOpenPos);
-      break;
-    case UTIL_ARM_BOTTOM:
-      moveUtilArm(arm, utilArmBottomOpenPos);
-      break;
-  }
+  moveUtilArm(arm, utilArmOpenPos);
 }
 
 void closeUtilArm(int arm)
 {
-  switch (arm)
-  {
-    case UTIL_ARM_TOP:
-      moveUtilArm(arm, utilArmTopClosedPos);
-      break;
-    case UTIL_ARM_BOTTOM:
-      moveUtilArm(arm, utilArmBottomClosedPos);
-      break;
-  } 
+  moveUtilArm(arm, utilArmClosedPos);
 }
 
 void waveUtilArm(int arm)
@@ -5482,28 +5484,92 @@ void waveUtilArm(int arm)
 void moveUtilArm(int arm, int position)
 {
   switch (arm)
-    {
-      case UTIL_ARM_TOP:
-        UtilArmTopServo.write(position);
-        if ( position == utilArmTopClosedPos)
-        {
-          isUtilArmTopOpen = false;
-        } else
-        {
-          isUtilArmTopOpen = true;
-        }
-        break;
-      case UTIL_ARM_BOTTOM:  
-        UtilArmBottomServo.write(position);
-        if ( position == utilArmBottomClosedPos)
-        {
-          isUtilArmBottomOpen = false;
-        } else
-        {
-          isUtilArmBottomOpen = true;
-        }
-        break;
-    }
+  {
+    case UTIL_ARM_TOP:
+      if (position == utilArmClosedPos)
+      {
+        btnCross_MD_func = 77;
+        isUtilArmTopOpen = false;
+      } else
+      {
+        btnCross_MD_func = 76;
+        isUtilArmTopOpen = true;
+      }
+     marcDuinoButtonPush (btnCross_type, btnCross_MD_func, btnCross_cust_MP3_num, btnCross_cust_LD_type, btnCross_cust_LD_text, btnCross_cust_panel,
+                          btnCross_use_DP1,
+                          btnCross_DP1_open_start_delay,
+                          btnCross_DP1_stay_open_time,
+                          btnCross_use_DP2,
+                          btnCross_DP2_open_start_delay,
+                          btnCross_DP2_stay_open_time,
+                          btnCross_use_DP3,
+                          btnCross_DP3_open_start_delay,
+                          btnCross_DP3_stay_open_time,
+                          btnCross_use_DP4,
+                          btnCross_DP4_open_start_delay,
+                          btnCross_DP4_stay_open_time,
+                          btnCross_use_DP5,
+                          btnCross_DP5_open_start_delay,
+                          btnCross_DP5_stay_open_time,
+                          btnCross_use_DP6,
+                          btnCross_DP6_open_start_delay,
+                          btnCross_DP6_stay_open_time,
+                          btnCross_use_DP7,
+                          btnCross_DP7_open_start_delay,
+                          btnCross_DP7_stay_open_time,
+                          btnCross_use_DP8,
+                          btnCross_DP8_open_start_delay,
+                          btnCross_DP8_stay_open_time,
+                          btnCross_use_DP9,
+                          btnCross_DP9_open_start_delay,
+                          btnCross_DP9_stay_open_time,
+                          btnCross_use_DP10,
+                          btnCross_DP10_open_start_delay,
+                          btnCross_DP10_stay_open_time);
+      break;
+    case UTIL_ARM_BOTTOM:
+      if (position == utilArmClosedPos)
+      {
+        btnCircle_MD_func = 75;
+        isUtilArmBottomOpen = false;
+      } else
+      {
+        btnCircle_MD_func = 74;
+        isUtilArmBottomOpen = true;
+      }
+      marcDuinoButtonPush(btnCircle_type, btnCircle_MD_func, btnCircle_cust_MP3_num, btnCircle_cust_LD_type, btnCircle_cust_LD_text, btnCircle_cust_panel,
+                          btnCircle_use_DP1,
+                          btnCircle_DP1_open_start_delay,
+                          btnCircle_DP1_stay_open_time,
+                          btnCircle_use_DP2,
+                          btnCircle_DP2_open_start_delay,
+                          btnCircle_DP2_stay_open_time,
+                          btnCircle_use_DP3,
+                          btnCircle_DP3_open_start_delay,
+                          btnCircle_DP3_stay_open_time,
+                          btnCircle_use_DP4,
+                          btnCircle_DP4_open_start_delay,
+                          btnCircle_DP4_stay_open_time,
+                          btnCircle_use_DP5,
+                          btnCircle_DP5_open_start_delay,
+                          btnCircle_DP5_stay_open_time,
+                          btnCircle_use_DP6,
+                          btnCircle_DP6_open_start_delay,
+                          btnCircle_DP6_stay_open_time,
+                          btnCircle_use_DP7,
+                          btnCircle_DP7_open_start_delay,
+                          btnCircle_DP7_stay_open_time,
+                          btnCircle_use_DP8,
+                          btnCircle_DP8_open_start_delay,
+                          btnCircle_DP8_stay_open_time,
+                          btnCircle_use_DP9,
+                          btnCircle_DP9_open_start_delay,
+                          btnCircle_DP9_stay_open_time,
+                          btnCircle_use_DP10,
+                          btnCircle_DP10_open_start_delay,
+                          btnCircle_DP10_stay_open_time);
+      break;
+  }
 }
 
 void openPanels()
