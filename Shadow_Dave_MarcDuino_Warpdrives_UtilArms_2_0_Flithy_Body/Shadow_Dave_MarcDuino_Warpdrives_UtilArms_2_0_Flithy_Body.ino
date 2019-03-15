@@ -690,11 +690,11 @@ int btnRight_L2_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow Down + L2
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnDown_L2_type = 2;
+int btnDown_L2_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnDown_L2_MD_func = 0;
+int btnDown_L2_MD_func = 4;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
@@ -3652,6 +3652,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 10:
         Serial1.print(":SE09\r");
+        Serial3.print(":SE09\r");
         break;
 
       case 11:
