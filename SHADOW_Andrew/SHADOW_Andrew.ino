@@ -55,7 +55,7 @@
 // ---------------------------------------------------------------------------------------
 
 //Primary Controller 
-String PS3MoveNavigatonPrimaryMAC = "00:06:F5:CD:87:C1"; //If using multiple controlers, designate a primary
+String PS3MoveNavigatonPrimaryMAC = "E0:AE:5E:62:7E:D2"; //If using multiple controlers, designate a primary
 
 
 byte drivespeed1 = 75;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
