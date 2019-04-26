@@ -1370,7 +1370,7 @@ int btnUP_L1_DP10_stay_open_time = 5; // in seconds (1 to 30)
 // CONFIGURE: Arrow Left + L1
 //---------------------------------
 //1 = Std MarcDuino Function, 2 = Custom Function
-int btnLeft_L1_type = 2;
+int btnLeft_L1_type = 1;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
@@ -1782,12 +1782,12 @@ int btnUP_L1_L2_type = 2;
 
 // IF Std MarcDuino Function (type=1)
 // Enter MarcDuino Function Code (1 - 75) (See Above)
-int btnUP_L1_L2_MD_func = 8;
+int btnUP_L1_L2_MD_func = 0;
 
 // IF Custom Function (type=2)
 // CUSTOM SOUND SETTING: Enter the file # prefix on the MP3 trigger card of the sound to play (0 = NO SOUND)
 // Valid values: 0 or 182 - 200
-int btnUP_L1_L2_cust_MP3_num = 5;
+int btnUP_L1_L2_cust_MP3_num = 190;
 
 // CUSTOM LOGIC DISPLAY SETTING: Pick from the Std MD Logic Display Functions (See Above)
 // Valid values: 0, 1 to 8  (0 - Not used)
@@ -2516,6 +2516,12 @@ const int PanelClosedPos = 0;    // variable to store the servo closed position
 const int PanelOpenPos = 140;    // variable to store the servo closed position
 
 boolean isPanelsOpen = false;
+
+const int DoorsClosedPos = 0;    // variable to store the servo closed position
+const int DoorsOpenPos = 140;    // variable to store the servo closed position
+
+boolean isDoorsOpen = false;
+
 
 // ---------------------------------------------------------------------------------------
 //                          Variables
@@ -3563,6 +3569,11 @@ void ps3ToggleSettings(PS3BT* myPS3 = PS3Nav)
   {
     wavePanels();
   }
+
+  if ((myPS3->getButtonPress(L1) && !myPS3->getButtonPress(L2)) && myPS3->getButtonClick(LEFT))
+  {
+    waveDoors();
+  }
 }
 
 // =======================================================================================
@@ -3657,6 +3668,7 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 11:
         Serial1.print(":SE10\r");
+        Serial3.print(":SE10\r");
         break;
 
       case 12:
@@ -3909,12 +3921,12 @@ void marcDuinoButtonPush(int type, int MD_func, int MP3_num, int LD_type, String
 
       case 72:
         Serial3.print(":OP02\r");
-		Serial3.print(":OP05\r");
+		    Serial3.print(":OP05\r");
         break;
 
       case 73:
         Serial3.print(":CL02\r");
-		Serial3.print(":CL05\r");
+		    Serial3.print(":CL05\r");
         break;
 
       case 74:
@@ -5390,7 +5402,7 @@ void ps3marcDuinoControl(PS3BT* myPS3 = PS3Nav, int controllerNumber = 1)
     if (myPS3->getButtonClick(UP))          processmarcDuinoCommand('9');
     else if (myPS3->getButtonClick(RIGHT))  processmarcDuinoCommand('0');
     else if (myPS3->getButtonClick(DOWN))   processmarcDuinoCommand('A');
-    else if (myPS3->getButtonClick(LEFT))   processmarcDuinoCommand('B');
+    //else if (myPS3->getButtonClick(LEFT))   processmarcDuinoCommand('B');
     else if (myPS3->getButtonClick(CROSS))  processmarcDuinoCommand('+');
     else if (myPS3->getButtonClick(CIRCLE)) processmarcDuinoCommand('-');
   }
@@ -5655,6 +5667,85 @@ void movePanels(int position)
                     btnCircle_L1_L2_DP10_stay_open_time);
 }
 
+void openDoors()
+{
+  //When passed a position - this can "partially" open the arms.
+  //Great for more interaction
+  moveDoors(DoorsOpenPos);
+}
+
+void closeDoors()
+{
+  moveDoors(DoorsClosedPos);
+}
+
+void waveDoors()
+{
+  if (isDoorsOpen == false) {
+    #ifdef SHADOW_DEBUG
+      output += "Doors Closed, Open them.\r\n";
+    #endif
+    openDoors();
+    isDoorsOpen = true;
+  } else {
+    #ifdef SHADOW_DEBUG
+      output += "Doors Open, Open them.\r\n";
+    #endif
+    closeDoors();
+    isDoorsOpen = false;
+  }
+}
+
+void moveDoors(int position)
+{
+  switch (position)
+  {
+    case DoorsOpenPos:
+      #ifdef SHADOW_DEBUG
+          output += "Opening All Panels\r\n";
+      #endif
+      btnLeft_L1_MD_func = 72;
+      break;
+    case DoorsClosedPos:
+      #ifdef SHADOW_DEBUG
+          output += "Closing All Panels\r\n";
+      #endif
+      btnLeft_L1_MD_func = 73;
+      break;
+  }
+  
+  marcDuinoButtonPush(btnLeft_L1_type, btnLeft_L1_MD_func, btnLeft_L1_cust_MP3_num, btnLeft_L1_cust_LD_type, btnLeft_L1_cust_LD_text, btnLeft_L1_cust_panel,
+                    btnLeft_L1_use_DP1,
+                    btnLeft_L1_DP1_open_start_delay,
+                    btnLeft_L1_DP1_stay_open_time,
+                    btnLeft_L1_use_DP2,
+                    btnLeft_L1_DP2_open_start_delay,
+                    btnLeft_L1_DP2_stay_open_time,
+                    btnLeft_L1_use_DP3,
+                    btnLeft_L1_DP3_open_start_delay,
+                    btnLeft_L1_DP3_stay_open_time,
+                    btnLeft_L1_use_DP4,
+                    btnLeft_L1_DP4_open_start_delay,
+                    btnLeft_L1_DP4_stay_open_time,
+                    btnLeft_L1_use_DP5,
+                    btnLeft_L1_DP5_open_start_delay,
+                    btnLeft_L1_DP5_stay_open_time,
+                    btnLeft_L1_use_DP6,
+                    btnLeft_L1_DP6_open_start_delay,
+                    btnLeft_L1_DP6_stay_open_time,
+                    btnLeft_L1_use_DP7,
+                    btnLeft_L1_DP7_open_start_delay,
+                    btnLeft_L1_DP7_stay_open_time,
+                    btnLeft_L1_use_DP8,
+                    btnLeft_L1_DP8_open_start_delay,
+                    btnLeft_L1_DP8_stay_open_time,
+                    btnLeft_L1_use_DP9,
+                    btnLeft_L1_DP9_open_start_delay,
+                    btnLeft_L1_DP9_stay_open_time,
+                    btnLeft_L1_use_DP10,
+                    btnLeft_L1_DP10_open_start_delay,
+                    btnLeft_L1_DP10_stay_open_time);
+}
 
 // =======================================================================================
 //          Flash Coin Slot LED Function
