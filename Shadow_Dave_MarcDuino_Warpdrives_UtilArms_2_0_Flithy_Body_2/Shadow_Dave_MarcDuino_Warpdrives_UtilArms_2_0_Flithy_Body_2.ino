@@ -58,13 +58,13 @@
 String PS3MoveNavigatonPrimaryMAC = "00:07:04:0A:B4:3F"; //If using multiple controlers, designate a primary
 
 
-byte drivespeed1 = 75;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
-byte drivespeed2 = 75;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
+byte drivespeed1 = 80;   //set these 3 to whatever speeds work for you. 0-stop, 127-full speed.
+byte drivespeed2 = 80;  //Recommend beginner: 50 to 75, experienced: 100 to 127, I like 100.
 
-byte turnspeed = 50; //50;     // the higher this number the faster it will spin in place, lower - easier to control.
+byte turnspeed = 75; //50;     // the higher this number the faster it will spin in place, lower - easier to control.
 // Recommend beginner: 40 to 50, experienced: 50 $ up, I like 75
 
-byte domespeed = 50;    // If using a speed controller for the dome, sets the top speed
+byte domespeed = 100;    // If using a speed controller for the dome, sets the top speed
 // Use a number up to 127 for serial
 
 byte ramping = 4; //3;   // Ramping - the lower this number the longer R2 will take to speedup or slow down,
