@@ -76,7 +76,7 @@ byte joystickFootDeadZoneRange = 15;  // For controllers that centering problems
 byte joystickDomeDeadZoneRange = 10;  // For controllers that centering problems, use the lowest number with no drift
 byte driveDeadBandRange = 10;     // Used to set the Sabertooth DeadZone for foot motors
 
-int invertTurnDirection = 1;   //This may need to be set to 1 for some configurations
+int invertTurnDirection = -1;   //This may need to be set to 1 for some configurations
 
 byte domeAutoSpeed = 127;     // Speed used when dome automation is active (1- 127)
 int time360DomeTurn = 1250;  // milliseconds for dome to complete 360 turn at domeAutoSpeed
